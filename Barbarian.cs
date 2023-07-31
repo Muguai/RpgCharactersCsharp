@@ -1,10 +1,16 @@
 using System.Collections.Generic;
 
-public class Barbarian : HeroClass{
-    List<string> validWeaponTypes = new List<string>();
-    List<string> validArmorTypes = new List<string>();
+public class Barbarian : HeroClass
+{
 
-    public Barbarian(string name){
+    public Barbarian(string name)
+    {
         this.heroName = name;
+        this.validArmorTypes = new ArmorType[] { ArmorType.Mail, ArmorType.Plate };
+        this.validWeaponTypes= new WeaponType[] { WeaponType.Hatchet, WeaponType.Mace, WeaponType.Sword };
+        this.heroStats = new HeroStats(5,2,1);
+        this.levelUpStats = new HeroStats(3,2,1);
+        this.damagingStat = "str";
+        this.className = "Barbarian";
     }
 }
