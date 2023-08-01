@@ -30,11 +30,11 @@ public abstract class HeroClass
         if (equipment[EquipmentType.Weapon] == null)
             return 0;
         Weapon w = (Weapon)equipment[EquipmentType.Weapon];
-        return w.weaponDamage + (1 + heroStats.getSum(damagingStat) / 100);
+        return w.WeaponDamage + (1 + heroStats.getSum(damagingStat) / 100);
     }
     public void Equip(Weapon weapon)
     {
-        if (!Array.Exists(validWeaponTypes, x => x == weapon.weaponType))
+        if (!Array.Exists(validWeaponTypes, x => x == weapon.WeaponType))
         {
             //error
             return;
@@ -45,13 +45,13 @@ public abstract class HeroClass
     }
     public void Equip(Armor armor)
     {
-        if (!Array.Exists(validArmorTypes, x => x == armor.armorType))
+        if (!Array.Exists(validArmorTypes, x => x == armor.ArmorType))
         {
             //error
             return;
         }
 
-        equipment[armor.equipType] = armor;
+        equipment[armor.EquipType] = armor;
 
     }
     public int SpecificStat(string stat)
@@ -65,7 +65,7 @@ public abstract class HeroClass
                 continue;
 
             Armor a = (Armor)i.Value;
-            total += a.armorStats.getSum(stat);
+            total += a.ArmorStats.getSum(stat);
         }
 
         return heroStats.getSum(stat) + total;
@@ -92,6 +92,6 @@ public abstract class HeroClass
         sb.AppendFormat("Intelligence: " + SpecificStat("int"));
         sb.AppendLine();
         sb.AppendFormat("Damage: " + Damage());
-
+        Console.WriteLine(sb.ToString());
     }
 }

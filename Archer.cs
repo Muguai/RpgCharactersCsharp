@@ -11,5 +11,6 @@ public class Archer : HeroClass
         this.heroStats = new HeroStats(1,7,1);
         this.levelUpStats = new HeroStats(1,5,1);
         this.damagingStat = "dex";
+        this.className = "Archer";
     }
 }

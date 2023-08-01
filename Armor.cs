@@ -1,12 +1,12 @@
 public class Armor : Item
 {
-    public ArmorType armorType { get; private set; }
-    public HeroStats armorStats { get; private set; }
+    public ArmorType ArmorType { get; private set; }
+    public HeroStats ArmorStats { get; private set; }
     public Armor(ArmorType type, EquipmentType bodyType, HeroStats stats, string name)
     {
-        this.armorType = type;
-        this.equipType = bodyType;
-        this.armorStats = stats;
+        this.ArmorType = type;
+        this.EquipType = bodyType;
+        this.ArmorStats = stats;
         this.itemName = name;
     }
 }

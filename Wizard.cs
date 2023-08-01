@@ -11,5 +11,6 @@ public class Wizard : HeroClass
         this.heroStats = new HeroStats(1,1,8);
         this.levelUpStats = new HeroStats(1,1,5);
         this.damagingStat = "int";
+        this.className = "Wizard";
     }
 }

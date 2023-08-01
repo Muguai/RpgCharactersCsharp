@@ -11,5 +11,6 @@ public class SwashBuckler : HeroClass
         this.heroStats = new HeroStats(2,6,1);
         this.levelUpStats = new HeroStats(1,4,1);
         this.damagingStat = "dex";
+        this.className = "SwashBuckler";
     }
 }

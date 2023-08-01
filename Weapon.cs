@@ -1,12 +1,12 @@
 public class Weapon : Item{
 
-    public WeaponType weaponType{get; private set;} 
-    public int weaponDamage{get; private set;} 
+    public WeaponType WeaponType{get; private set;} 
+    public int WeaponDamage{get; private set;} 
 
     Weapon(WeaponType type, int dmg, string name){
-        this.weaponType = type;
-        this.equipType = EquipmentType.Weapon; 
-        this.weaponDamage = dmg;
+        this.WeaponType = type;
+        this.EquipType = EquipmentType.Weapon; 
+        this.WeaponDamage = dmg;
         this.itemName = name;
     }
 }

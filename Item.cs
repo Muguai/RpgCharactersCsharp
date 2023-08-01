@@ -1,4 +1,4 @@
 public abstract class Item{
     protected string itemName = "";
-    public EquipmentType equipType {get; protected set;}
+    public EquipmentType EquipType {get; protected set;}
 }

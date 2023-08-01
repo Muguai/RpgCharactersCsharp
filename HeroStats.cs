@@ -1,27 +1,27 @@
 public class HeroStats{
-    public int strength {get; private set;} = 1;
-    public int dexterity {get; private set;} = 1;
-    public int intelligence {get; private set;} = 1;
+    public int Strength {get; private set;} = 1;
+    public int Dexterity {get; private set;} = 1;
+    public int Intelligence {get; private set;} = 1;
     public HeroStats(int strength, int dexterity, int intelligence){
-        this.intelligence = intelligence;
-        this.dexterity = dexterity;
-        this.strength = strength;
+        this.Intelligence = intelligence;
+        this.Dexterity = dexterity;
+        this.Strength = strength;
     }
 
     public void Add(HeroStats stats){
-        this.strength += stats.strength;
-        this.dexterity += stats.dexterity;
-        this.intelligence += stats.intelligence;
+        this.Strength += stats.Strength;
+        this.Dexterity += stats.Dexterity;
+        this.Intelligence += stats.Intelligence;
     }
 
     public int getSum(string stat){
         switch(stat){
             case "str":
-                return strength;
+                return Strength;
             case "int":
-                return intelligence;
+                return Intelligence;
             case "dex":
-                return dexterity;
+                return Dexterity;
         }
 
         return 0;
