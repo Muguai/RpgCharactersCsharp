@@ -1,7 +1,7 @@
 public class IslandGenerator
 {
     bool debug = false;
-    public int[,] InitIsland(int rows, int columns)
+    public Island InitIsland(int rows, int columns)
     {
         int iterations = 8; 
         int minLandMass = 30;
@@ -28,14 +28,14 @@ public class IslandGenerator
         Random random = new Random();
         int startPositionIndex = random.Next(landCells);
 
-        if (!debug)
+        if (debug)
         {
             Console.WriteLine("--- ISLAND AFTER ---");
             PrintIsland(island);    
             Console.WriteLine("TOTAL LANDMASS --> " + landCells + " VS TOTAL CELLS " + totalCells);
         }
 
-
+        Coordinate playerPos = new Coordinate(0,0);
         int count = 0;
         for (int i = 0; i < rows; i++)
         {
@@ -46,12 +46,13 @@ public class IslandGenerator
                     if (count == startPositionIndex)
                     {
                         island[i, j] = 2;
+                        playerPos = new Coordinate(i,j);
                     }
                     count++;
                 }
             }
         }
-        return island;
+        return new Island(island, playerPos, rows, columns);
     }
 
     static int[,] GenerateIsland(int rows, int columns)
@@ -108,7 +109,6 @@ public class IslandGenerator
             }
             int currentLandMass = (island.Cast<int>().Count(cell => cell == 1));
             if(iteration + 1 == iterations && currentLandMass < minLandMass){
-                Console.WriteLine("Correcty " + currentLandMass);
                 iteration--;
             }
         }

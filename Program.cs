@@ -48,41 +48,20 @@ public static class Program
 
         AnsiConsole.MarkupLine("You dumb name is: [yellow]{0}[/]", name);
 
-        Console.Clear();
-
         AnsiConsole.Clear();
 
+
         IslandGenerator islandGenerator = new IslandGenerator();
-        int rows = 10;
-        int columns = 10;
-        int[,] island = islandGenerator.InitIsland(rows, columns);
+        Island island = islandGenerator.InitIsland(10, 10);
 
 
-        var canvas = new Canvas(columns, rows);
+        island.DisplayIsland();
 
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < columns; j++)
-            {
-                int value = island[i, j];
-                if (value == 0)
-                {
-                    canvas.SetPixel(j, i, Color.Blue);
-                }
-                else if (value == 1)
-                {
-                    canvas.SetPixel(j, i, Color.Green);
-                }else if (value == 2)
-                {
-                    canvas.SetPixel(j, i, Color.Yellow);
-                }
-            }
-        }
+        string direction = island.DisplayAvailableDirections();
 
-        // Render the canvas
-        AnsiConsole.Write(canvas);
+        Console.WriteLine(direction);
+        
 
-        var direction = AnsiConsole.Ask<string>($"Where you wanna go [green]{name}[/]?");
         AnsiConsole.Clear();
 
     }
