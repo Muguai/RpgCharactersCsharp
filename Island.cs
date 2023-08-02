@@ -7,7 +7,7 @@ public class Island
     public int columns { get; set; }
     public Coordinate playerPos;
 
-    private bool debug = true;
+    private bool debug = false;
     public Island(int[,] islandGrid, Coordinate playerPos, int rows, int columns)
     {
         this.islandGrid = islandGrid;
@@ -25,18 +25,19 @@ public class Island
     {
         List<string> directions = new List<string>();
 
-        if (playerPos.GetAdjacent("Down") == 1)
-            directions.Add("Down");
         if (islandGrid[playerPos.X - 1, playerPos.Y] == 1)
             directions.Add("Up");
-        if (islandGrid[playerPos.X, playerPos.Y + 1] == 1)
-            directions.Add("Right");
+        if (islandGrid[playerPos.X + 1, playerPos.Y] == 1)
+            directions.Add("Down");
         if (islandGrid[playerPos.X, playerPos.Y - 1] == 1)
             directions.Add("Left");
+        if (islandGrid[playerPos.X, playerPos.Y + 1] == 1)
+            directions.Add("Right");
 
         if (debug)
         {
-            Console.WriteLine("X+1 " + islandGrid[playerPos.X + 1, playerPos.Y]
+            Console.WriteLine(
+            "X+1 " + islandGrid[playerPos.X + 1, playerPos.Y]
             + " X-1 " + islandGrid[playerPos.X - 1, playerPos.Y]
             + " Y+1 " + islandGrid[playerPos.X, playerPos.Y + 1]
             + " Y-1 " + islandGrid[playerPos.X, playerPos.Y - 1]

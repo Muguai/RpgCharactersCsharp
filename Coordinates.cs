@@ -7,26 +7,4 @@ public struct Coordinate{
         this.Y = y;
     }
 
-    public Coordinate GetAdjacent(string direction){
-        Coordinate result;
-        switch(direction){
-            case "Down":
-                result = new Coordinate(X + 1 , Y);
-                break;
-            case "Up":
-                result = new Coordinate(X - 1, Y);
-                break;
-            case "Right":
-                result = new Coordinate(X, Y + 1);
-                break;
-            case "Left":
-                result = new Coordinate(X, Y - 1);
-                break;
-            default:
-                result = new Coordinate(X,Y);
-                break;
-        }
-
-        return result;
-    }
 }
