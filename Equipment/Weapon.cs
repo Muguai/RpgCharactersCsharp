@@ -1,12 +1,14 @@
+namespace Equipment;
 public class Weapon : Item{
 
     public WeaponType WeaponType{get; private set;} 
     public int WeaponDamage{get; private set;} 
 
-    Weapon(WeaponType type, int dmg, string name){
+    public Weapon(WeaponType type, int dmg, string name, int reqLevel){
         this.WeaponType = type;
-        this.EquipType = EquipmentType.Weapon; 
+        this.ItemSlot = Slot.Weapon; 
         this.WeaponDamage = dmg;
         this.itemName = name;
+        this.RequiredLevel = reqLevel;
     }
 }

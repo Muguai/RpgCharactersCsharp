@@ -1,3 +1,4 @@
+namespace Hero;
 public class HeroStats{
     public int Strength {get; private set;} = 1;
     public int Dexterity {get; private set;} = 1;
@@ -25,6 +26,11 @@ public class HeroStats{
         }
 
         return 0;
+    }
+
+    public override string ToString()
+    {
+        return "Str: " + Strength + " Int: " + Intelligence + " Dex: " + Dexterity;
     }
 
 }

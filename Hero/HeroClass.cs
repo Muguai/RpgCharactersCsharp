@@ -1,5 +1,5 @@
-using System.Collections.Generic;
-using System.Linq;
+namespace Hero;
+using Equipment;
 using System.Text;
 
 public abstract class HeroClass
@@ -12,12 +12,12 @@ public abstract class HeroClass
     protected HeroStats levelUpStats = null!;
     protected ArmorType[] validArmorTypes = null!;
     protected WeaponType[] validWeaponTypes = null!;
-    protected Dictionary<EquipmentType, Item> equipment = new Dictionary<EquipmentType, Item>()
+    protected Dictionary<Slot, Item> equipment = new Dictionary<Slot, Item>()
     {
-        {EquipmentType.Weapon, null!},
-        {EquipmentType.Head, null!},
-        {EquipmentType.Body, null!},
-        {EquipmentType.Legs, null!}
+        {Slot.Weapon, null!},
+        {Slot.Head, null!},
+        {Slot.Body, null!},
+        {Slot.Legs, null!}
     };
 
     public void LevelUp()
@@ -27,41 +27,39 @@ public abstract class HeroClass
     }
     public int Damage()
     {
-        if (equipment[EquipmentType.Weapon] == null)
+        if (equipment[Slot.Weapon] == null)
             return 0;
-        Weapon w = (Weapon)equipment[EquipmentType.Weapon];
-        return w.WeaponDamage + (1 + heroStats.getSum(damagingStat) / 100);
+        Weapon w = (Weapon)equipment[Slot.Weapon];
+        return w.WeaponDamage + (1 + TotalStats().getSum(damagingStat) / 100);
     }
     public void Equip(Weapon weapon)
     {
-        if (!Array.Exists(validWeaponTypes, x => x == weapon.WeaponType))
+        if (!Array.Exists(validWeaponTypes, x => x == weapon.WeaponType) || weapon.RequiredLevel > level)
         {
-            //error
-            return;
+            throw new InvalidWeaponException();
         }
 
-        equipment[EquipmentType.Weapon] = weapon;
+        equipment[Slot.Weapon] = weapon;
 
     }
     public void Equip(Armor armor)
     {
-        if (!Array.Exists(validArmorTypes, x => x == armor.ArmorType))
+        if (!Array.Exists(validArmorTypes, x => x == armor.ArmorType) || armor.RequiredLevel > level)
         {
-            //error
-            return;
+            throw new InvalidArmorException();
         }
 
-        equipment[armor.EquipType] = armor;
+        equipment[armor.ItemSlot] = armor;
 
     }
     public int SpecificStat(string stat)
     {
         int total = 0;
-        foreach (KeyValuePair<EquipmentType, Item> i in equipment)
+        foreach (KeyValuePair<Slot, Item> i in equipment)
         {
             if (i.Value == null)
                 continue;
-            if (i.Key == EquipmentType.Weapon)
+            if (i.Key == Slot.Weapon)
                 continue;
 
             Armor a = (Armor)i.Value;
