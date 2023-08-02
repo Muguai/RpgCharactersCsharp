@@ -30,14 +30,13 @@ public abstract class HeroClass
         if (equipment[Slot.Weapon] == null)
             return 0;
         Weapon w = (Weapon)equipment[Slot.Weapon];
-        return w.WeaponDamage + (1 + heroStats.getSum(damagingStat) / 100);
+        return w.WeaponDamage + (1 + TotalStats().getSum(damagingStat) / 100);
     }
     public void Equip(Weapon weapon)
     {
-        if (!Array.Exists(validWeaponTypes, x => x == weapon.WeaponType))
+        if (!Array.Exists(validWeaponTypes, x => x == weapon.WeaponType) || weapon.RequiredLevel > level)
         {
-            //error
-            return;
+            throw new InvalidWeaponException();
         }
 
         equipment[Slot.Weapon] = weapon;
@@ -45,10 +44,9 @@ public abstract class HeroClass
     }
     public void Equip(Armor armor)
     {
-        if (!Array.Exists(validArmorTypes, x => x == armor.ArmorType))
+        if (!Array.Exists(validArmorTypes, x => x == armor.ArmorType) || armor.RequiredLevel > level)
         {
-            //error
-            return;
+            throw new InvalidArmorException();
         }
 
         equipment[armor.ItemSlot] = armor;

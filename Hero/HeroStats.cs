@@ -28,4 +28,9 @@ public class HeroStats{
         return 0;
     }
 
+    public override string ToString()
+    {
+        return "Str: " + Strength + " Int: " + Intelligence + " Dex: " + Dexterity;
+    }
+
 }
