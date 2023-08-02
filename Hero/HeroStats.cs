@@ -1,3 +1,4 @@
+namespace Hero;
 public class HeroStats{
     public int Strength {get; private set;} = 1;
     public int Dexterity {get; private set;} = 1;

@@ -1,3 +1,4 @@
+namespace Equipment;
 public enum WeaponType{
     Hatchet,
     Bow,

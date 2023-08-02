@@ -1,5 +1,5 @@
-using System.Collections.Generic;
-
+namespace Hero;
+using Equipment;
 public class SwashBuckler : HeroClass
 {
     
