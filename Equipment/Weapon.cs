@@ -8,7 +8,10 @@ public class Weapon : Item{
         this.WeaponType = type;
         this.ItemSlot = Slot.Weapon; 
         this.WeaponDamage = dmg;
-        this.itemName = name;
+        this.ItemName = name;
         this.RequiredLevel = reqLevel;
+    }
+    public override string ToString(){
+        return ItemSlot.ToString() + ": " + ItemName + " Type: " + WeaponType.ToString() + " Damage: " + WeaponDamage + " Req Level: "  + RequiredLevel;
     }
 }

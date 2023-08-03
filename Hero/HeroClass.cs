@@ -1,6 +1,7 @@
 namespace Hero;
 using Equipment;
 using System.Text;
+using Spectre.Console;
 
 public abstract class HeroClass
 {
@@ -90,6 +91,84 @@ public abstract class HeroClass
         sb.AppendFormat("Intelligence: " + SpecificStat("int"));
         sb.AppendLine();
         sb.AppendFormat("Damage: " + Damage());
-        Console.WriteLine(sb.ToString());
+        //Console.WriteLine(sb.ToString());
+
+        BarChart barChart = new BarChart()
+        .Width(150)
+        .Label($"[green slowblink]Level {level}[/]")
+        .CenterLabel()
+        .AddItem("Str", SpecificStat("str"), Color.Red)
+        .AddItem("Dex", SpecificStat("dex"), Color.Blue)
+        .AddItem("Int", SpecificStat("int"), Color.Purple);
+
+
+        // Create the layout
+        var layout = new Layout("Root")
+            .SplitColumns(
+                new Layout("Right")
+                .SplitRows(new Layout("Left")
+                .SplitRows(new Layout("left1"),
+                 new Layout("left2").SplitRows(new Layout("right1"),
+                 new Layout("right2"))))
+
+               );
+
+        string weaponName = equipment[Slot.Weapon] == null ? " None " : equipment[Slot.Weapon].ToString()!;
+        string headName = equipment[Slot.Head] == null ? "Head: None" : equipment[Slot.Head].ToString()!;
+        string bodyName = equipment[Slot.Body] == null ? "Body: None" : equipment[Slot.Body].ToString()!;
+        string legName = equipment[Slot.Legs] == null ? "Legs: None" : equipment[Slot.Legs].ToString()!;
+
+        Panel panel1 = new Panel(
+                Align.Center(
+                    new Rows(
+            new Text($"Name: {heroName}"),
+            new Text(" "),
+            new Text($"Class: {className}"),
+            new Text(" "),
+            new Text(" "),
+            new Text($"---Equipped---"),
+            new Text(" "),
+            new Text($"{weaponName}"),
+            new Text(" "),
+            new Text($"{headName}"),
+            new Text(" "),
+            new Text($"{bodyName}"),
+            new Text(" "),
+            new Text($"{legName}")
+        ), VerticalAlignment.Middle));
+
+        panel1.Header("Characther Info");
+        panel1.HeaderAlignment(Justify.Center);
+        layout["Left1"].Update(panel1.Expand());
+
+        Panel panel3 = new Panel(
+               Align.Center(
+                   new Markup(""), VerticalAlignment.Top));
+
+
+        panel3.Header("Inventory");
+        panel3.HeaderAlignment(Justify.Center);
+
+        layout["right1"].Update(panel3.Expand());
+
+        Panel panel2 = new Panel(
+                Align.Center(
+                    barChart, VerticalAlignment.Middle));
+
+        panel2.Header("Stats");
+        panel2.HeaderAlignment(Justify.Center);
+        layout["right2"].Update(
+            panel2.Expand()
+            );
+
+
+        layout["left1"].MinimumSize(3);
+        layout["right1"].MinimumSize(5);
+
+        layout["right2"].MinimumSize(5);
+        layout["Right"].MinimumSize(5);
+        AnsiConsole.Write(layout);
+
+        var name = AnsiConsole.Ask<string>($"Type Any Key To Continue{layout["left2"].Size}..");
     }
 }

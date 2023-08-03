@@ -1,6 +1,6 @@
 namespace Equipment;
 public abstract class Item{
-    protected string itemName = "";
+    public string ItemName { get; set; }= "";
     public int RequiredLevel { get; protected set; }
     public Slot ItemSlot {get; protected set;}
 }
