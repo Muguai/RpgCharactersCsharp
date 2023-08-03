@@ -15,6 +15,7 @@ namespace Tests
             // Arrange
             HeroStats expectedStats = new HeroStats(5,2,1);
             Barbarian barb = new Barbarian("Cohen");
+            
             // Act & Asset
             Assert.AreEqual(barb.TotalStats().ToString(), expectedStats.ToString());
         }
