@@ -1,15 +1,13 @@
 using Equipment;
 using Hero;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using Xunit;
 using System.Reflection;
 
 namespace Tests
 {
-    [TestClass]
     public class ArmorTests
     {
-        [TestMethod]
+        [Fact]
         public void ArmorCreation_ArmorGetsCorrectInitValuesAtCreation_test1HeadCloth1_1_1()
         {
             // Arrange
@@ -32,7 +30,7 @@ namespace Tests
                 var actualArmorType = testArmor.ArmorType;
                 var actualStats = testArmor.ArmorStats;
                 // Assert
-                Assert.AreEqual((expectedName + expectedRequiredLevel + expectedItemSlot.ToString() + expectedArmorType.ToString() + expectedStats.ToString() )
+                Assert.Equal((expectedName + expectedRequiredLevel + expectedItemSlot.ToString() + expectedArmorType.ToString() + expectedStats.ToString() )
                 , (actualName + actualRequiredLevel + actualItemSlot.ToString() + actualArmorType.ToString() +  actualStats.ToString())
                 );
 
@@ -42,7 +40,7 @@ namespace Tests
                 Assert.Fail("A Field was not found or is null.");
             };
         }
-        [TestMethod]
+        [Fact]
         public void Equip_TestEquippingInvalidArmor_InvalidArmorException()
         {
             // Arrange
@@ -51,11 +49,11 @@ namespace Tests
             var armor = new Armor(ArmorType.Cloth, Slot.Head, stat, "DumbArmor", 1);
 
             // Act & Asset
-            Assert.ThrowsException<InvalidArmorException>(() => barb.Equip(armor));
+            Assert.Throws<InvalidArmorException>(() => barb.Equip(armor));
 
         }
 
-        [TestMethod]
+        [Fact]
         public void Equip_EquippingAArmorToAHero_NotNull()
         {
             // Arrange
@@ -71,7 +69,7 @@ namespace Tests
             if (equipmentField != null)
             {
                 var equipDict = equipmentField.GetValue(swash) as Dictionary<Slot,Item>;
-                Assert.IsNotNull(equipDict?[Slot.Body]);
+                Assert.NotNull(equipDict?[Slot.Body]);
             }
             else
             {

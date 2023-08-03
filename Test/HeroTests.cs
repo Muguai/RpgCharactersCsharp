@@ -1,15 +1,13 @@
 using Equipment;
 using Hero;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using Xunit;
 using System.Reflection;
 
 namespace Tests
 {
-    [TestClass]
     public class HeroTests
     {
-        [TestMethod]
+        [Fact]
         public void HeroCreation_HeroGetsCorrectInitValuesAtCreation_5_2_1Cohen1()
         {
             // Arrange
@@ -33,7 +31,7 @@ namespace Tests
                 if (actualStats != null)
                 {
                     // Assert
-                    Assert.AreEqual((expectedStats.ToString() + expectedName + expectedLevel), (actualStats.ToString() + actualName + actualLevel));
+                    Assert.Equal((expectedStats.ToString() + expectedName + expectedLevel), (actualStats.ToString() + actualName + actualLevel));
                 }
             }
             else
@@ -41,8 +39,8 @@ namespace Tests
                 Assert.Fail("A Field was not found or is null.");
             };
         }
-        [TestMethod]
-        public void LevelUp_LevelAndStatsGetsIncreasedAtLevelUp_2_2_13_2()
+        [Fact]
+        public void FactLevelUp_LevelAndStatsGetsIncreasedAtLevelUp_2_2_13_2()
         {
             // Arrange
             Wizard wizard = new Wizard("Ridcully");
@@ -60,7 +58,7 @@ namespace Tests
                 if (actualStats != null)
                 {
                     // Assert
-                    Assert.AreEqual(expectedStats.ToString() + expectedLevel, actualStats.ToString() + actualLevel);
+                    Assert.Equal(expectedStats.ToString() + expectedLevel, actualStats.ToString() + actualLevel);
                 }
             }
             else
