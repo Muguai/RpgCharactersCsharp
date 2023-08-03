@@ -16,9 +16,13 @@ public class Island
         this.columns = columns;
     }
 
-    public void MovePlayer()
+    public void MovePlayer(string dir)
     {
-
+        AnsiConsole.Clear();
+        islandGrid[playerPos.X, playerPos.Y] = 1;
+        playerPos = playerPos.getAdjacent(dir);
+        islandGrid[playerPos.X, playerPos.Y] = 2;
+        DisplayIsland();
     }
 
     public string DisplayAvailableDirections()

@@ -57,12 +57,14 @@ public static class Program
 
         island.DisplayIsland();
 
-        string direction = island.DisplayAvailableDirections();
+        while(true){
 
-        Console.WriteLine(direction);
+            string direction = island.DisplayAvailableDirections();
+
+            island.MovePlayer(direction);
+
+        }
         
-
-        AnsiConsole.Clear();
 
     }
 
