@@ -1,15 +1,13 @@
 using Equipment;
 using Hero;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using Xunit;
 using System.Reflection;
 
 namespace Tests
 {
-    [TestClass]
     public class DamageTests
     {
-        [TestMethod]
+        [Fact]
         public void Damage_DamageWithNoWeapon_0Dmg()
         {
             // Arrange
@@ -19,10 +17,10 @@ namespace Tests
             // Act
             int actualDmg = swash.Damage();
             //Assert
-            Assert.AreEqual(expectedDmg, actualDmg);
+            Assert.Equal(expectedDmg, actualDmg);
         }
 
-        [TestMethod]
+        [Fact]
         public void Damage_DamageWithEquippedWeapon_SomeDmg()
         {
             // Arrange
@@ -34,10 +32,10 @@ namespace Tests
             swash.Equip(weapon);
             int actualDmg = swash.Damage();
             //Assert
-            Assert.AreEqual(expectedDmg, actualDmg);
+            Assert.Equal(expectedDmg, actualDmg);
         }
 
-        [TestMethod]
+        [Fact]
         public void Damage_DamageWithReEquippedWeapon_SomeDmg()
         {
             // Arrange
@@ -51,10 +49,10 @@ namespace Tests
             swash.Equip(weapon2);
             int actualDmg = swash.Damage();
             //Assert
-            Assert.AreEqual(expectedDmg, actualDmg);
+            Assert.Equal(expectedDmg, actualDmg);
         }
 
-         [TestMethod]
+         [Fact]
         public void Damage_DamageWithWeaponAndArmor_SomeDmg()
         {
             // Arrange
@@ -69,7 +67,7 @@ namespace Tests
             swash.Equip(weapon);
             int actualDmg = swash.Damage();
             //Assert
-            Assert.AreEqual(expectedDmg, actualDmg);
+            Assert.Equal(expectedDmg, actualDmg);
         }
     }
 }

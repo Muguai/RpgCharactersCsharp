@@ -1,15 +1,13 @@
 using Equipment;
 using Hero;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using Xunit;
 using System.Reflection;
 
 namespace Tests
 {
-    [TestClass]
     public class WeaponTests
     {
-        [TestMethod]
+        [Fact]
         public void WeaponCreation_WeaponGetsCorrectInitValuesAtCreation_test1WeaponDagger4()
         {
             // Arrange
@@ -32,7 +30,7 @@ namespace Tests
                 var actualWeaponType = testWeapon.WeaponType;
                 var actualWeaponDmg = testWeapon.WeaponDamage;
                 //Assert
-                Assert.AreEqual((expectedName + expectedRequiredLevel + expectedItemSlot.ToString() + expectedWeaponType.ToString() + expectedDmg)
+                Assert.Equal((expectedName + expectedRequiredLevel + expectedItemSlot.ToString() + expectedWeaponType.ToString() + expectedDmg)
                 , (actualName + actualRequiredLevel + actualItemSlot.ToString() + actualWeaponType.ToString() + actualWeaponDmg)
                 );
             }
@@ -41,7 +39,7 @@ namespace Tests
                 Assert.Fail("A Field was not found or is null.");
             };
         }
-        [TestMethod]
+        [Fact]
         public void Equip_TestEquipingInvalidWeapon_InvalidWeaponException()
         {
             // Arrange
@@ -49,11 +47,11 @@ namespace Tests
             Weapon weapon = new Weapon(WeaponType.Hatchet, 4, "Bad Hatchet", 1);
 
             // Act & Assert
-            Assert.ThrowsException<InvalidWeaponException>(() => wiz.Equip(weapon));
+            Assert.Throws<InvalidWeaponException>(() => wiz.Equip(weapon));
 
         }
 
-        [TestMethod]
+        [Fact]
         public void Equip_EquippingAWeaponToAHero_NotNull()
         {
             // Arrange
@@ -69,7 +67,7 @@ namespace Tests
             if (equipmentField != null)
             {
                 var equipDict = equipmentField.GetValue(swash) as Dictionary<Slot,Item>;
-                Assert.IsNotNull(equipDict?[Slot.Weapon]);
+                Assert.NotNull(equipDict?[Slot.Weapon]);
             }
             else
             {
