@@ -9,11 +9,11 @@ public class Armor : Item
         this.ArmorType = type;
         this.ItemSlot = bodyType;
         this.ArmorStats = stats;
-        this.ItemName = name;
+        this.itemName = name;
         this.RequiredLevel = reqLevel;
     }
 
     public override string ToString(){
-        return ItemSlot.ToString() + ": " + ItemName + " Type: " + ArmorType.ToString() + " Stat Increase: " + ArmorStats.ToString() + " Req Level: " + RequiredLevel;
+        return ItemSlot.ToString() + ": " + itemName + " Type: " + ArmorType.ToString() + " Stat Increase: " + ArmorStats.ToString() + " Req Level: " + RequiredLevel;
     }
 }

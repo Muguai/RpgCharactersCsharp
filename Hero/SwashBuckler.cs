@@ -7,7 +7,7 @@ public class SwashBuckler : HeroClass
     {   
         this.heroName = name;
         this.validArmorTypes = new ArmorType[] { ArmorType.Leather, ArmorType.Mail};
-        this.validWeaponTypes = new WeaponType[] { WeaponType.Dagger, WeaponType.Sword};
+        this.validWeaponTypes = new WeaponType[] {WeaponType.Fists, WeaponType.Dagger, WeaponType.Sword};
         this.heroStats = new HeroStats(2,6,1);
         this.levelUpStats = new HeroStats(1,4,1);
         this.damagingStat = "dex";

@@ -118,7 +118,7 @@ public abstract class HeroClass
         string bodyName = equipment[Slot.Body] == null ? "Body: None" : equipment[Slot.Body].ToString()!;
         string legName = equipment[Slot.Legs] == null ? "Legs: None" : equipment[Slot.Legs].ToString()!;
 
-        Panel panel1 = new Panel(
+        Panel charactherInfoPanel = new Panel(
                 Align.Center(
                     new Rows(
             new Text($"Name: {heroName}"),
@@ -137,28 +137,27 @@ public abstract class HeroClass
             new Text($"{legName}")
         ), VerticalAlignment.Middle));
 
-        panel1.Header("Characther Info");
-        panel1.HeaderAlignment(Justify.Center);
-        layout["Left1"].Update(panel1.Expand());
+        charactherInfoPanel.Header("Characther Info");
+        charactherInfoPanel.HeaderAlignment(Justify.Center);
+        layout["Left1"].Update(charactherInfoPanel.Expand());
 
-        Panel panel3 = new Panel(
-               Align.Center(
-                   new Markup(""), VerticalAlignment.Top));
+        Panel inventoryPanel = new Panel(
+               Align.Center(new Markup(""), VerticalAlignment.Top));
 
 
-        panel3.Header("Inventory");
-        panel3.HeaderAlignment(Justify.Center);
+        inventoryPanel.Header("Inventory");
+        inventoryPanel.HeaderAlignment(Justify.Center);
 
-        layout["right1"].Update(panel3.Expand());
+        layout["right1"].Update(inventoryPanel.Expand());
 
-        Panel panel2 = new Panel(
+        Panel statPanel = new Panel(
                 Align.Center(
                     barChart, VerticalAlignment.Middle));
 
-        panel2.Header("Stats");
-        panel2.HeaderAlignment(Justify.Center);
+        statPanel.Header("Stats");
+        statPanel.HeaderAlignment(Justify.Center);
         layout["right2"].Update(
-            panel2.Expand()
+            statPanel.Expand()
             );
 
 
