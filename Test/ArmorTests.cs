@@ -19,26 +19,16 @@ namespace Tests
             Armor testArmor = new Armor(ArmorType.Cloth, Slot.Head, new HeroStats(1, 1, 1), "test", 1);
 
             // Act
-            var type = typeof(Item);
-            var nameField = type.GetField("itemName", BindingFlags.NonPublic | BindingFlags.Instance);
 
-            if (nameField != null)
-            {
-                var actualName = nameField.GetValue(testArmor) as string;
-                var actualRequiredLevel = testArmor.RequiredLevel;
-                var actualItemSlot = testArmor.ItemSlot;
-                var actualArmorType = testArmor.ArmorType;
-                var actualStats = testArmor.ArmorStats;
-                // Assert
-                Assert.Equal((expectedName + expectedRequiredLevel + expectedItemSlot.ToString() + expectedArmorType.ToString() + expectedStats.ToString() )
-                , (actualName + actualRequiredLevel + actualItemSlot.ToString() + actualArmorType.ToString() +  actualStats.ToString())
-                );
-
-            }
-            else
-            {
-                Assert.Fail("A Field was not found or is null.");
-            };
+            var actualName = testArmor.ItemName;
+            var actualRequiredLevel = testArmor.RequiredLevel;
+            var actualItemSlot = testArmor.ItemSlot;
+            var actualArmorType = testArmor.ArmorType;
+            var actualStats = testArmor.ArmorStats;
+            // Assert
+            Assert.Equal((expectedName + expectedRequiredLevel + expectedItemSlot.ToString() + expectedArmorType.ToString() + expectedStats.ToString() )
+            , (actualName + actualRequiredLevel + actualItemSlot.ToString() + actualArmorType.ToString() +  actualStats.ToString())
+            );
         }
         [Fact]
         public void Equip_TestEquippingInvalidArmor_InvalidArmorException()

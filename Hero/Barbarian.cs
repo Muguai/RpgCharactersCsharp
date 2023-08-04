@@ -13,5 +13,7 @@ public class Barbarian : HeroClass
         this.levelUpStats = new HeroStats(3,2,1);
         this.damagingStat = "str";
         this.className = "Barbarian";
+        this.maxHealth = 20;
+        this.health = this.maxHealth;
     }
 }

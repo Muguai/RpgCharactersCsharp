@@ -1,6 +1,8 @@
 namespace GameStructure;
 using Spectre.Console;
 using Hero;
+using Utils;
+using Equipment;
 public class GameLoop
 {
     private Island currentIsland = null!;
@@ -20,6 +22,7 @@ public class GameLoop
         List<string> options = new List<string>();
         options.Add("Travel");
         options.Add("CharacterInfo");
+        options.Add("Equip");
 
 
         var chosenOption = AnsiConsole.Prompt(
@@ -40,6 +43,9 @@ public class GameLoop
             case "CharacterInfo":
                 Display();
                 break;
+            case "Equip":
+                Equip();
+                break;
         }
 
         AnsiConsole.Clear();
@@ -51,11 +57,34 @@ public class GameLoop
         currentHero.Display();
     }
 
+    private void Equip(){
+        currentHero.EquipFromInventory(ConsoleUtils.StringAsk("Name Item You Wanna Equip"));
+    }
+
     private void Travel()
     {
+        Misc food = (Misc)HeroUtils.FindItemInInventory(currentHero.Inventory, "Food");
+        food.Amount -= 1;
+        if(food.Amount <= 0){
+            AnsiConsole.Write(
+            new FigletText("No Food Left")
+            .LeftJustified()
+            .Color(Color.Orange3));
+            GameOver();
+        }
         currentIsland.DisplayIsland();
         string direction = currentIsland.DisplayAvailableDirections();
         currentIsland.MovePlayer(direction);
+        //if(currentHero.Inventory.Contains)
+    }
+
+    private void GameOver(){
+        AnsiConsole.Write(
+            new FigletText("Game Over")
+            .LeftJustified()
+            .Color(Color.Red));
+        ConsoleUtils.PressEnterToContinue();
+        Environment.Exit(1);
     }
 
     private void PlayerOptions()

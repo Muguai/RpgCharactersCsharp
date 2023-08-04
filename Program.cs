@@ -70,10 +70,35 @@ public static class Program
 
         Weapon weapon = new Weapon(WeaponType.Fists,1,"Your Fists",1);
         hero.Equip(weapon);
+        Misc misc = new Misc("Food", MiscType.Rations, 10);
+        hero.AddToInventory(misc);
+        
+        Misc misc2 = new Misc("faf", MiscType.Rations, 10);
+        hero.AddToInventory(misc2);
+        
+        Misc misc3 = new Misc("Baba", MiscType.Rations, 10);
+        hero.AddToInventory(misc3);
+
+        Misc misc5 = new Misc("fefde", MiscType.Rations, 10);
+        hero.AddToInventory(misc5);
         AnsiConsole.WriteLine(dialog);
+        
+        Weapon misc4 = new Weapon(WeaponType.Dagger,1,"Your dagger",1);
+        hero.AddToInventory(misc4);
+        AnsiConsole.WriteLine(dialog);
+
+        Armor misc6 = new Armor(ArmorType.Cloth, Slot.Body, new HeroStats(1,1,1), "Ugly Armor", 1);
+        hero.AddToInventory(misc6);
+        AnsiConsole.WriteLine(dialog);
+        
+        
+        
+
+        
 
 
         AnsiConsole.Clear();
+        
 
 
         IslandGenerator islandGenerator = new IslandGenerator();

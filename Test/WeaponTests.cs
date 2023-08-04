@@ -19,25 +19,15 @@ namespace Tests
             Weapon testWeapon = new Weapon(WeaponType.Dagger, 4, "test", 1);
 
             // Act
-            var type = typeof(Item);
-            var nameField = type.GetField("itemName", BindingFlags.NonPublic | BindingFlags.Instance);
-
-            if (nameField != null)
-            {
-                var actualName = nameField.GetValue(testWeapon) as string;
-                var actualRequiredLevel = testWeapon.RequiredLevel;
-                var actualItemSlot = testWeapon.ItemSlot;
-                var actualWeaponType = testWeapon.WeaponType;
-                var actualWeaponDmg = testWeapon.WeaponDamage;
-                //Assert
-                Assert.Equal((expectedName + expectedRequiredLevel + expectedItemSlot.ToString() + expectedWeaponType.ToString() + expectedDmg)
-                , (actualName + actualRequiredLevel + actualItemSlot.ToString() + actualWeaponType.ToString() + actualWeaponDmg)
-                );
-            }
-            else
-            {
-                Assert.Fail("A Field was not found or is null.");
-            };
+            var actualName = testWeapon.ItemName;            
+            var actualRequiredLevel = testWeapon.RequiredLevel;
+            var actualItemSlot = testWeapon.ItemSlot;
+            var actualWeaponType = testWeapon.WeaponType;
+            var actualWeaponDmg = testWeapon.WeaponDamage;
+            //Assert
+            Assert.Equal((expectedName + expectedRequiredLevel + expectedItemSlot.ToString() + expectedWeaponType.ToString() + expectedDmg)
+            , (actualName + actualRequiredLevel + actualItemSlot.ToString() + actualWeaponType.ToString() + actualWeaponDmg)
+            );
         }
         [Fact]
         public void Equip_TestEquipingInvalidWeapon_InvalidWeaponException()
