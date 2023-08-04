@@ -27,7 +27,7 @@ public abstract class HeroClass
     }
     public int Damage()
     {
-        if (equipment[Slot.Weapon] == null)
+        if (equipment[Slot.Weapon] is null)
             return 0;
         Weapon w = (Weapon)equipment[Slot.Weapon];
         return w.WeaponDamage + (1 + TotalStats().getSum(damagingStat) / 100);
