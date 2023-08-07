@@ -61,6 +61,8 @@ public class Island
     public void DisplayIsland()
     {
         var canvas = new Canvas(columns, rows);
+        canvas.MaxWidth = 50;
+
 
         for (int i = 0; i < rows; i++)
         {
