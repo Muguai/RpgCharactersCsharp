@@ -12,7 +12,7 @@ public class Archer : HeroClass
         this.levelUpStats = new HeroStats(1,5,1);
         this.damagingStat = "dex";
         this.className = "Archer";
-        this.maxHealth = 15;
-        this.health = this.maxHealth;
+        this.MaxHealth = 15;
+        this.Health = this.MaxHealth;
     }
 }

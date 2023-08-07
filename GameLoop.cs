@@ -24,6 +24,11 @@ public class GameLoop
         options.Add("CharacterInfo");
         options.Add("Equip");
 
+        Misc food = (Misc)HeroUtils.FindItemInInventory(currentHero.Inventory, "Food");
+
+        if(currentHero.Health < currentHero.MaxHealth && food.Amount > 0)
+             options.Add("Eat Food");
+
 
         var chosenOption = AnsiConsole.Prompt(
         new SelectionPrompt<string>()
@@ -45,6 +50,9 @@ public class GameLoop
                 break;
             case "Equip":
                 Equip();
+                break;
+            case "Eat Food":
+                Eat();
                 break;
         }
 
@@ -85,6 +93,23 @@ public class GameLoop
             .Color(Color.Red));
         ConsoleUtils.PressEnterToContinue();
         Environment.Exit(1);
+    }
+
+    private void Eat(){
+        Misc food = (Misc)HeroUtils.FindItemInInventory(currentHero.Inventory, "Food");
+        food.Amount -= 1;
+        int healAmount = 5;
+        currentHero.Health += healAmount;
+        if(currentHero.Health > currentHero.MaxHealth){
+            healAmount = healAmount - (currentHero.Health - currentHero.MaxHealth);
+            currentHero.Health = currentHero.MaxHealth;
+        }
+
+         AnsiConsole.Write(
+            new FigletText("You healed " + healAmount + " Health")
+            .LeftJustified()
+            .Color(Color.Green));
+        ConsoleUtils.PressEnterToContinue();
     }
 
     private void PlayerOptions()

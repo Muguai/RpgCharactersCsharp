@@ -1,8 +1,6 @@
 namespace Hero;
 using Equipment;
-using System.Text;
 using Spectre.Console;
-using System.Linq;
 using Utils;
 
 public abstract class HeroClass
@@ -15,8 +13,8 @@ public abstract class HeroClass
     protected HeroStats levelUpStats = null!;
     protected ArmorType[] validArmorTypes = null!;
     protected WeaponType[] validWeaponTypes = null!;
-    protected int health;
-    protected int maxHealth;
+    public int Health { get; set; }
+    public int MaxHealth { get; set; }
     protected Dictionary<Slot, Item> equipment = new Dictionary<Slot, Item>()
     {
         {Slot.Weapon, null!},
@@ -27,8 +25,6 @@ public abstract class HeroClass
 
     public List<Item> Inventory { get; private set; } = new List<Item>();
 
-    //Just realising this is stupid cause might cause errors if a weapon and a misc item has the same name
-    //Might fix later but for now i will just make sure to give each item a distinct name
     public void AddToInventory(Item item)
     {
         if (Inventory.Contains(item))
@@ -66,6 +62,14 @@ public abstract class HeroClass
             }
         }
     }
+
+    public int GetAmountOfDice(){
+        if(equipment[Slot.Weapon] is null)
+            return 0;
+        Weapon weapon = (Weapon)equipment[Slot.Weapon];
+        return weapon.AmountOfDice;
+    }
+
 
     public void LevelUp()
     {
@@ -244,8 +248,8 @@ public abstract class HeroClass
 
          BreakdownChart breakChart = new BreakdownChart()
             .Width(150)
-            .AddItem("Health", health, Color.Red)
-            .AddItem("Lost Health", maxHealth - health, Color.DarkRed);
+            .AddItem("Health", Health, Color.Red)
+            .AddItem("Lost Health", MaxHealth - Health, Color.DarkRed);
 
         var grid2 = new Grid().Collapse();
         grid2.AddColumn(new GridColumn().PadLeft(5));
@@ -262,12 +266,14 @@ public abstract class HeroClass
             statPanel.Expand()
             );
 
-
+        // ------------------- Size Adjustments -------------
         layout["Left1"].Size(20);
         layout["Right1"].MinimumSize(30);
 
         layout["Right2"].Size(10);
         layout["Right"].MinimumSize(5);
+
+
         AnsiConsole.Write(layout);
         ConsoleUtils.PressEnterToContinue();
 
@@ -296,6 +302,7 @@ public abstract class HeroClass
                     table.AddColumn("Weapon");
                     table.AddRow(tempItem2.ItemName);
                     table.AddRow("Type: " + tempItem2.WeaponType.ToString());
+                    table.AddRow("Amount Of Dice: " + tempItem2.AmountOfDice);
                     table.AddRow("Damage: " + tempItem2.WeaponDamage);
                     table.AddRow("Req Level: " + tempItem2.RequiredLevel);
                     break;

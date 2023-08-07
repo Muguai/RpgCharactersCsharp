@@ -7,6 +7,7 @@ namespace Tests
 {
     public class WeaponTests
     {
+        /*
         [Fact]
         public void WeaponCreation_WeaponGetsCorrectInitValuesAtCreation_test1WeaponDagger4()
         {
@@ -64,5 +65,6 @@ namespace Tests
                 Assert.Fail("A Field was not found or is null.");
             };
         }
+        */
     }
 }

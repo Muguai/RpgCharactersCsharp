@@ -12,7 +12,7 @@ public class Wizard : HeroClass
         this.levelUpStats = new HeroStats(1,1,5);
         this.damagingStat = "int";
         this.className = "Wizard";
-        this.maxHealth = 10;
-        this.health = this.maxHealth;
+        this.MaxHealth = 10;
+        this.Health = this.MaxHealth;
     }
 }

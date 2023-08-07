@@ -2,6 +2,7 @@
 using GameStructure;
 using Hero;
 using Equipment;
+using Utils;
 
 public static class Program
 {
@@ -32,6 +33,9 @@ public static class Program
             new FigletText("Dumb Adventure")
                 .LeftJustified()
                 .Color(Color.Red));
+
+        //Dice.GenerateDice(1);
+
 
         var name = AnsiConsole.Ask<string>("What's your heros [green]name[/]?");
 
@@ -68,7 +72,7 @@ public static class Program
                 break;
         }
 
-        Weapon weapon = new Weapon(WeaponType.Fists,1,"Your Fists",1);
+        Weapon weapon = new Weapon(WeaponType.Fists,1,0,"Your Fists",1);
         hero.Equip(weapon);
         Misc misc = new Misc("Food", MiscType.Rations, 10);
         hero.AddToInventory(misc);
@@ -81,15 +85,21 @@ public static class Program
 
         Misc misc5 = new Misc("fefde", MiscType.Rations, 10);
         hero.AddToInventory(misc5);
-        AnsiConsole.WriteLine(dialog);
         
-        Weapon misc4 = new Weapon(WeaponType.Dagger,1,"Your dagger",1);
+        Weapon misc4 = new Weapon(WeaponType.Dagger,1,1,"Your dagger",1);
         hero.AddToInventory(misc4);
-        AnsiConsole.WriteLine(dialog);
+
 
         Armor misc6 = new Armor(ArmorType.Cloth, Slot.Body, new HeroStats(1,1,1), "Ugly Armor", 1);
         hero.AddToInventory(misc6);
-        AnsiConsole.WriteLine(dialog);
+
+        Combat combat = new();
+        Item[] drops = new Item[] {misc6, misc2};
+        Enemy enemy = new("Goblin", 1 , 1, 10,drops );
+
+        bool what = combat.StartCombat(hero, enemy);
+        AnsiConsole.WriteLine(dialog + " combat: "+  what);
+        ConsoleUtils.PressEnterToContinue();
         
         
         

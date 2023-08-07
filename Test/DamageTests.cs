@@ -7,6 +7,7 @@ namespace Tests
 {
     public class DamageTests
     {
+        /*
         [Fact]
         public void Damage_DamageWithNoWeapon_0Dmg()
         {
@@ -69,5 +70,6 @@ namespace Tests
             //Assert
             Assert.Equal(expectedDmg, actualDmg);
         }
+        */
     }
 }

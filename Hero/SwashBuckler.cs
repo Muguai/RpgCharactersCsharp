@@ -12,7 +12,7 @@ public class SwashBuckler : HeroClass
         this.levelUpStats = new HeroStats(1, 4, 1);
         this.damagingStat = "dex";
         this.className = "SwashBuckler";
-        this.maxHealth = 15;
-        this.health = this.maxHealth;
+        this.MaxHealth = 15;
+        this.Health = this.MaxHealth;
     }
 }

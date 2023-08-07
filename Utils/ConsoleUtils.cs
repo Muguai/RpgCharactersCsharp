@@ -10,6 +10,14 @@ public static class ConsoleUtils
             .AllowEmpty());
     }
 
+    public static void EmptyPressEnterToContinue()
+    {
+        AnsiConsole.Prompt(
+            new TextPrompt<string>("")
+            .AllowEmpty());
+    }
+
+
     public static string StringAsk(string question)
     {
         var name = AnsiConsole.Ask<string>(question);
