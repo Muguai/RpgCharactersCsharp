@@ -1,4 +1,5 @@
 using Spectre.Console;
+using Utils;
 public static class Dice
 {
 
@@ -56,7 +57,16 @@ public static class Dice
             }
         }
 
-        AnsiConsole.Write(canvas);
+        var grid = new Grid();
+        var align = new Align(canvas, HorizontalAlignment.Center);
+        // Add columns 
+        grid.AddColumn();
+
+        // Add header row 
+        grid.AddRow(canvas);
+
+        AnsiConsole.Write(align);
+        
         return diceResults.Sum();
     }
 }

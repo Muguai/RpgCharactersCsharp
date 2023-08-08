@@ -1,14 +1,15 @@
 using Spectre.Console;
-
+using Utils;
+using Tiles;
 public class Island
 {
-    public int[,] islandGrid { get; set; } = null!;
+    public Tile[,] islandGrid { get; set; } = null!;
     public int rows { get; set; }
     public int columns { get; set; }
     public Coordinate playerPos;
 
-    private bool debug = false;
-    public Island(int[,] islandGrid, Coordinate playerPos, int rows, int columns)
+    private bool debug = true;
+    public Island(Tile[,] islandGrid, Coordinate playerPos, int rows, int columns)
     {
         this.islandGrid = islandGrid;
         this.playerPos = playerPos;
@@ -18,10 +19,13 @@ public class Island
 
     public void MovePlayer(string dir)
     {
-        AnsiConsole.Clear();
-        islandGrid[playerPos.X, playerPos.Y] = 1;
+     
+        //islandGrid[playerPos.X, playerPos.Y] = new TestTile();
         playerPos = playerPos.getAdjacent(dir);
-        islandGrid[playerPos.X, playerPos.Y] = 2;
+        AnsiConsole.Clear();
+        Console.Clear();
+        //await islandGrid[playerPos.X,playerPos.Y].Enter();
+        //islandGrid[playerPos.X, playerPos.Y] = 2;
         DisplayIsland();
     }
 
@@ -29,14 +33,14 @@ public class Island
     {
         List<string> directions = new List<string>();
 
-        if (islandGrid[playerPos.X - 1, playerPos.Y] == 1)
-            directions.Add("Up");
-        if (islandGrid[playerPos.X + 1, playerPos.Y] == 1)
-            directions.Add("Down");
-        if (islandGrid[playerPos.X, playerPos.Y - 1] == 1)
-            directions.Add("Left");
-        if (islandGrid[playerPos.X, playerPos.Y + 1] == 1)
-            directions.Add("Right");
+        if (!(islandGrid[playerPos.X - 1, playerPos.Y] is WaterTile))
+            directions.Add(ConsoleUtils.PadCenterSpecify("Up", 4));
+        if (!(islandGrid[playerPos.X + 1, playerPos.Y] is WaterTile))
+            directions.Add(ConsoleUtils.PadCenterSpecify("Down", 4));
+        if (!(islandGrid[playerPos.X, playerPos.Y - 1] is WaterTile))
+            directions.Add(ConsoleUtils.PadCenterSpecify("Left", 4));
+        if (!(islandGrid[playerPos.X, playerPos.Y + 1] is WaterTile))
+            directions.Add(ConsoleUtils.PadCenterSpecify("Right", 4));
 
         if (debug)
         {
@@ -50,11 +54,15 @@ public class Island
 
         var direction = AnsiConsole.Prompt(
           new SelectionPrompt<string>()
-          .Title("Where do you wanna go")
+          .Title(ConsoleUtils.PadCenterText("Where do you wanna go"))
           .PageSize(10)
           .AddChoices(directions));
 
-        return direction;
+        return direction.Trim();
+    }
+
+    public Tile CurrentTile(){
+        return islandGrid[playerPos.X, playerPos.Y];
     }
 
 
@@ -68,23 +76,25 @@ public class Island
         {
             for (int j = 0; j < columns; j++)
             {
-                int value = islandGrid[i, j];
-                if (value == 0)
+                Tile value = islandGrid[i, j];
+                if ((i, j) == (playerPos.X, playerPos.Y))
+                {
+                    canvas.SetPixel(j, i, Color.Yellow);
+                }
+                else if (value is WaterTile)
                 {
                     canvas.SetPixel(j, i, Color.Blue);
                 }
-                else if (value == 1)
+                else if (!(value is WaterTile))
                 {
                     canvas.SetPixel(j, i, Color.Green);
-                }
-                else if (value == 2)
-                {
-                    canvas.SetPixel(j, i, Color.Yellow);
                 }
             }
         }
 
-        AnsiConsole.Write(canvas);
+        var align = new Align(canvas, HorizontalAlignment.Center);
+
+        AnsiConsole.Write(align);
     }
 
 }

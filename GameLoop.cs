@@ -20,10 +20,11 @@ public class GameLoop
         currentIsland.DisplayIsland();
 
         List<string> options = new List<string>();
-        options.Add("Travel");
-        options.Add("CharacterInfo");
-        options.Add("Equip");
-
+        options.Add(ConsoleUtils.PadCenterSpecify("Travel", 4));
+        options.Add(ConsoleUtils.PadCenterSpecify("CharacterInfo", 4));
+        options.Add(ConsoleUtils.PadCenterSpecify("Equip", 4));
+        
+        options = options.Concat(currentIsland.CurrentTile().Options()).ToList();
         Misc food = (Misc)HeroUtils.FindItemInInventory(currentHero.Inventory, "Food");
 
         if(currentHero.Health < currentHero.MaxHealth && food.Amount > 0)
@@ -32,7 +33,7 @@ public class GameLoop
 
         var chosenOption = AnsiConsole.Prompt(
         new SelectionPrompt<string>()
-        .Title("Whatchu Wanna do dummy?")
+        .Title(ConsoleUtils.PadCenterText("Whatchu Wanna do dummy?"))
         .PageSize(5)
           .AddChoices(options));
 
@@ -40,7 +41,7 @@ public class GameLoop
         AnsiConsole.Clear();
 
 
-        switch (chosenOption)
+        switch (chosenOption.Trim())
         {
             case "Travel":
                 Travel();
@@ -54,6 +55,9 @@ public class GameLoop
             case "Eat Food":
                 Eat();
                 break;
+            default:
+            currentIsland.CurrentTile().ChooseOptions(chosenOption);
+                break;
         }
 
         AnsiConsole.Clear();
@@ -66,7 +70,12 @@ public class GameLoop
     }
 
     private void Equip(){
-        currentHero.EquipFromInventory(ConsoleUtils.StringAsk("Name Item You Wanna Equip"));
+         AnsiConsole.Write(
+            new FigletText("Equip")
+                .Justify(Justify.Center)
+                .Color(Color.Red));
+        AnsiConsole.Write(new Markup("Whatchu wanna equip").Centered());
+        currentHero.EquipFromInventory(ConsoleUtils.StringAsk(ConsoleUtils.PadCenterSpecify(">", "Whatchu wanna equip".Length + 1)));
     }
 
     private void Travel()
@@ -76,9 +85,9 @@ public class GameLoop
         if(food.Amount <= 0){
             AnsiConsole.Write(
             new FigletText("No Food Left")
-            .LeftJustified()
+            .Centered()
             .Color(Color.Orange3));
-            GameOver();
+            HeroUtils.GameOver();
         }
         currentIsland.DisplayIsland();
         string direction = currentIsland.DisplayAvailableDirections();
@@ -86,14 +95,7 @@ public class GameLoop
         //if(currentHero.Inventory.Contains)
     }
 
-    private void GameOver(){
-        AnsiConsole.Write(
-            new FigletText("Game Over")
-            .LeftJustified()
-            .Color(Color.Red));
-        ConsoleUtils.PressEnterToContinue();
-        Environment.Exit(1);
-    }
+    
 
     private void Eat(){
         Misc food = (Misc)HeroUtils.FindItemInInventory(currentHero.Inventory, "Food");
@@ -107,7 +109,7 @@ public class GameLoop
 
          AnsiConsole.Write(
             new FigletText("You healed " + healAmount + " Health")
-            .LeftJustified()
+            .Centered()
             .Color(Color.Green));
         ConsoleUtils.PressEnterToContinue();
     }

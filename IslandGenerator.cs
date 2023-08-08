@@ -1,15 +1,18 @@
+using Tiles;
 public class IslandGenerator
 {
-    bool debug = false;
+    bool debug = true;
+    Coordinate playerPos = new(0, 0);
+
     public Island InitIsland(int rows, int columns)
     {
-        int iterations = 8; 
+        int iterations = 6;
         int minLandMass = 30;
 
 
-        int[,] island = GenerateIsland(rows, columns);
+        Tile[,] island = GenerateIsland(rows, columns);
 
-        double desiredLandRatio = 0.3; 
+        double desiredLandRatio = 0.3;
         int totalCells = rows * columns;
         int desiredLandCells = (int)(totalCells * desiredLandRatio);
 
@@ -24,29 +27,29 @@ public class IslandGenerator
 
         island = CellularAutomaton(island, iterations, initialChance, minLandMass);
 
-        int landCells = island.Cast<int>().Count(cell => cell == 1);
+        int landCells = (island.Cast<Tile>().Count(cell => !(cell is WaterTile)));
         Random random = new Random();
         int startPositionIndex = random.Next(landCells);
 
         if (debug)
         {
             Console.WriteLine("--- ISLAND AFTER ---");
-            PrintIsland(island);    
+            PrintIsland(island);
             Console.WriteLine("TOTAL LANDMASS --> " + landCells + " VS TOTAL CELLS " + totalCells);
         }
-
-        Coordinate playerPos = new Coordinate(0,0);
+        Coordinate playerPos = new(0, 0);
         int count = 0;
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
             {
-                if (island[i, j] == 1)
+                if (!(island[i, j] is WaterTile))
                 {
+
                     if (count == startPositionIndex)
                     {
-                        island[i, j] = 2;
-                        playerPos = new Coordinate(i,j);
+                        playerPos = new Coordinate(i, j);
+                        Console.WriteLine("playerpos i " + i + " J " + j);
                     }
                     count++;
                 }
@@ -55,28 +58,27 @@ public class IslandGenerator
         return new Island(island, playerPos, rows, columns);
     }
 
-    static int[,] GenerateIsland(int rows, int columns)
+    static Tile[,] GenerateIsland(int rows, int columns)
     {
-        int[,] island = new int[rows, columns];
+        Tile[,] island = new Tile[rows, columns];
         Random random = new Random();
 
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
             {
-                island[i, j] = 0;
+                island[i, j] = new WaterTile();
             }
         }
 
         int startRow = random.Next(rows / 4, rows / 2);
         int startCol = random.Next(columns / 4, columns / 2);
 
-        island[startRow, startCol] = 1;
-
+        island[startRow, startCol] = new TestTile();
         return island;
     }
 
-    private int[,] CellularAutomaton(int[,] island, int iterations, double chance, int minLandMass)
+    private Tile[,] CellularAutomaton(Tile[,] island, int iterations, double chance, int minLandMass)
     {
         int rows = island.GetLength(0);
         int columns = island.GetLength(1);
@@ -85,30 +87,34 @@ public class IslandGenerator
 
         for (int iteration = 0; iteration < iterations; iteration++)
         {
-            int[,] newIsland = new int[rows, columns];
+            Console.WriteLine("IslandStart");
+            PrintIsland(island);
+
 
             for (int i = 1; i < rows - 1; i++)
             {
                 for (int j = 1; j < columns - 1; j++)
                 {
                     int neighborsCount = CountNeighbors(island, i, j);
-                    if (island[i, j] == 1 || (island[i, j] == 0 && neighborsCount > 0 && random.NextDouble() < chance))
+                    if (!(island[i, j] is WaterTile) || ((island[i, j] is WaterTile) && neighborsCount > 0 && random.NextDouble() < chance))
                     {
-                        newIsland[i, j] = 1;
+                        Console.WriteLine("Add");
+                        island[i, j] = new TestTile();
                     }
-                    if(debug)
+                    if (debug)
                         Console.WriteLine($"Cell [{i}, {j}] Neighbors: {neighborsCount}");
                 }
             }
 
-            island = newIsland;
 
-            if(debug){
+            if (debug)
+            {
                 Console.WriteLine($"Island after iteration {iteration + 1}:");
                 PrintIsland(island);
             }
-            int currentLandMass = (island.Cast<int>().Count(cell => cell == 1));
-            if(iteration + 1 == iterations && currentLandMass < minLandMass){
+            int currentLandMass = (island.Cast<Tile>().Count(cell => !(cell is WaterTile)));
+            if (iteration + 1 == iterations && currentLandMass < minLandMass)
+            {
                 iteration--;
             }
         }
@@ -116,7 +122,7 @@ public class IslandGenerator
         return island;
     }
 
-    private int CountNeighbors(int[,] island, int row, int col)
+    private int CountNeighbors(Tile[,] island, int row, int col)
     {
         int count = 0;
 
@@ -133,7 +139,7 @@ public class IslandGenerator
 
             if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < columns)
             {
-                if (island[newRow, newCol] == 1)
+                if (!(island[newRow, newCol] is WaterTile))
                 {
                     count++;
                 }
@@ -143,7 +149,7 @@ public class IslandGenerator
         return count;
     }
 
-    private void PrintIsland(int[,] island)
+    private void PrintIsland(Tile[,] island)
     {
         int rows = island.GetLength(0);
         int columns = island.GetLength(1);
@@ -153,11 +159,11 @@ public class IslandGenerator
         {
             for (int j = 0; j < columns; j++)
             {
-                if (island[i, j] == 0)
+                if (island[i, j] is WaterTile)
                 {
                     Console.Write(".");
                 }
-                else if (island[i, j] == 1)
+                else if (!(island[i, j] is WaterTile))
                 {
                     Console.Write("X");
                 }

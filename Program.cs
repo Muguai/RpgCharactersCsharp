@@ -31,28 +31,29 @@ public static class Program
 
         AnsiConsole.Write(
             new FigletText("Dumb Adventure")
-                .LeftJustified()
+                .Justify(Justify.Center)
                 .Color(Color.Red));
 
-        //Dice.GenerateDice(1);
+        var markup = new Markup("[yellow]Whats your name?[/]").Centered();
+        AnsiConsole.Write(markup);
+        var name = ConsoleUtils.StringAsk(ConsoleUtils.PadCenterSpecify(">", 20));
+        var markup2 = new Markup($"Your name is [yellow]{name}[/]").Centered();
+        AnsiConsole.Write(markup2);
 
-
-        var name = AnsiConsole.Ask<string>("What's your heros [green]name[/]?");
-
-        AnsiConsole.MarkupLine("You dumb name is: [yellow]{0}[/]", name);
-
-
+        var title = ConsoleUtils.PadCenterText("Choose your Class");
         var heroClass = AnsiConsole.Prompt(
           new SelectionPrompt<string>()
-          .Title("Choose your [green]Class[/]?")
-          .PageSize(5)
-          .AddChoices(new[] {
-                "Barbarian", "Wizard", "Archer",
-                "SwashBuckler",
-      }));
+            .Title(title)
+            .PageSize(5)
+            .AddChoices(new[] {
+                    ConsoleUtils.PadCenterSpecify("Barbarian", 4),
+                    ConsoleUtils.PadCenterSpecify("Wizard", 4),
+                    ConsoleUtils.PadCenterSpecify("Archer", 4),
+                    ConsoleUtils.PadCenterSpecify("SwashBuckler", 4),
+        }));
         HeroClass hero = null!;
         string dialog = "";
-        switch (heroClass)
+        switch (heroClass.Trim())
         {
             case "Barbarian":
                 dialog = "Barbarian sucks... but oh well its your choice i guess";
@@ -72,43 +73,45 @@ public static class Program
                 break;
         }
 
-        Weapon weapon = new Weapon(WeaponType.Fists,1,0,"Your Fists",1);
+        Weapon weapon = new Weapon(WeaponType.Fists, 1, 0, "Your Fists", 1);
         hero.Equip(weapon);
         Misc misc = new Misc("Food", MiscType.Rations, 10);
         hero.AddToInventory(misc);
-        
+
         Misc misc2 = new Misc("faf", MiscType.Rations, 10);
         hero.AddToInventory(misc2);
-        
+
         Misc misc3 = new Misc("Baba", MiscType.Rations, 10);
         hero.AddToInventory(misc3);
 
         Misc misc5 = new Misc("fefde", MiscType.Rations, 10);
         hero.AddToInventory(misc5);
-        
-        Weapon misc4 = new Weapon(WeaponType.Dagger,1,1,"Your dagger",1);
+
+        Weapon misc4 = new Weapon(WeaponType.Dagger, 1, 1, "Your dagger", 1);
         hero.AddToInventory(misc4);
 
 
-        Armor misc6 = new Armor(ArmorType.Cloth, Slot.Body, new HeroStats(1,1,1), "Ugly Armor", 1);
+        Armor misc6 = new Armor(ArmorType.Cloth, Slot.Body, new HeroStats(1, 1, 1), "Ugly Armor", 1);
         hero.AddToInventory(misc6);
 
+    /*
         Combat combat = new();
-        Item[] drops = new Item[] {misc6, misc2};
-        Enemy enemy = new("Goblin", 1 , 1, 10,drops );
+        Item[] drops = new Item[] { misc6, misc2 };
+        Enemy enemy = new("Goblin", 1, 1, 10, drops);
 
         bool what = combat.StartCombat(hero, enemy);
-        AnsiConsole.WriteLine(dialog + " combat: "+  what);
+        */
+        AnsiConsole.WriteLine(ConsoleUtils.PadCenterText(dialog));
         ConsoleUtils.PressEnterToContinue();
-        
-        
-        
 
-        
+
+
+
+
 
 
         AnsiConsole.Clear();
-        
+
 
 
         IslandGenerator islandGenerator = new IslandGenerator();

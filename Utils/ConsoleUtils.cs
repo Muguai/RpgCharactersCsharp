@@ -6,7 +6,7 @@ public static class ConsoleUtils
     public static void PressEnterToContinue()
     {
         AnsiConsole.Prompt(
-            new TextPrompt<string>("Press Enter To Continue..")
+            new TextPrompt<string>("'\u00A0'" + PadCenterSpecify("Press Enter To Continue..", 6))
             .AllowEmpty());
     }
 
@@ -17,13 +17,21 @@ public static class ConsoleUtils
             .AllowEmpty());
     }
 
-    public static string PadCenterText(string text){
+    public static string PadCenterText(string text)
+    {
         var consoleWidth = AnsiConsole.Profile.Width;
         var padding = (consoleWidth - text.Length) / 2;
         return new string(' ', Math.Max(0, padding)) + text;
     }
+     public static string PadCenterSpecify(string text, int specify)
+    {
+        var consoleWidth = AnsiConsole.Profile.Width;
+        var padding = (consoleWidth - (text.Length + specify)) / 2;
+        return new string(' ', Math.Max(0, padding)) + text;
+    }
 
-    public static void AddEmptyStringPadding(int width){
+    public static void AddEmptyStringPadding(int width)
+    {
         var consoleWidth = AnsiConsole.Profile.Width;
         int padding = (int)(consoleWidth - width)! / 2;
 
@@ -35,8 +43,7 @@ public static class ConsoleUtils
 
 
     public static string StringAsk(string question)
-    {
-        var name = AnsiConsole.Ask<string>(question);
-        return name;
+    {   var answer = AnsiConsole.Ask<string>("'\u00A0'" + question);
+        return answer;
     }
 }

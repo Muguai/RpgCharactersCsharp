@@ -14,10 +14,10 @@ public class Combat
 
 
     private List<string> actions = new List<string>(){
-        ConsoleUtils.PadCenterText("Attack"),
-        ConsoleUtils.PadCenterText("Run")
+        ConsoleUtils.PadCenterSpecify("Attack", 4),
+        ConsoleUtils.PadCenterSpecify("Run", 4)
     };
-    public bool StartCombat(HeroClass hero, Enemy enemy)
+    public void StartCombat(HeroClass hero, Enemy enemy)
     {
         heroInBattle = hero;
         enemyInBattle = enemy;
@@ -28,7 +28,8 @@ public class Combat
             .Color(Color.Aqua));
         CombatLoop();
         EndCombat();
-        return isPlayerDead;
+        if(isPlayerDead)
+            HeroUtils.GameOver();
     }
 
     private void EndCombat()

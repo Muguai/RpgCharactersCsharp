@@ -87,7 +87,7 @@ public abstract class HeroClass
     {
         if (!Array.Exists(validWeaponTypes, x => x == weapon.WeaponType) || weapon.RequiredLevel > level)
         {
-             AnsiConsole.WriteLine("You cant Equip " + weapon.WeaponType.ToString() + " Weapons ");
+             AnsiConsole.WriteLine(ConsoleUtils.PadCenterText("You cant Equip " + weapon.WeaponType.ToString() + " Weapons "));
              ConsoleUtils.PressEnterToContinue();
         }
         RemoveFromInventory(weapon);
@@ -98,7 +98,7 @@ public abstract class HeroClass
     {
         if (!Array.Exists(validArmorTypes, x => x == armor.ArmorType) || armor.RequiredLevel > level)
         {
-            AnsiConsole.WriteLine("You cant Equip " + armor.ArmorType.ToString() + " Armors ");
+            AnsiConsole.WriteLine(ConsoleUtils.PadCenterText("You cant Equip " + armor.ArmorType.ToString() + " Armors "));
             ConsoleUtils.PressEnterToContinue();
         }
         RemoveFromInventory(armor);
@@ -109,13 +109,13 @@ public abstract class HeroClass
         Item tempItem = HeroUtils.FindItemInInventory(Inventory, equipName);
 
         if(tempItem is null){
-            AnsiConsole.WriteLine("You aint got that item ");
+            AnsiConsole.WriteLine(ConsoleUtils.PadCenterText("You aint got that item"));
             ConsoleUtils.PressEnterToContinue();
             return;
         }
 
         if(tempItem.GetType() == typeof(Misc)){
-            AnsiConsole.WriteLine("You cant Equip misc Items ");
+            AnsiConsole.WriteLine(ConsoleUtils.PadCenterText("You cant Equip misc Items"));
             ConsoleUtils.PressEnterToContinue();
         }else if(tempItem.GetType() == typeof(Armor)){
             Armor armor = (Armor)tempItem;
