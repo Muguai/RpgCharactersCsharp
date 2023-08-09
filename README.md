@@ -10,7 +10,7 @@ Play with console fully filling the screen for best experience
 
 Game is not completly finished yet. All the neccesary logic is in place. 
 
-I just need to create events/encounters for each tile on the island and an ending boss tile (just some kinda of final goal for the player)
+I just need to create events/encounters for each tile on the island and an ending boss tile (just some kinda of final goal for the player).
 I created a simple system with JSON files to make this process faster so i might be done with this very soon
 (This might be why there is commits after the deadline on this branch if your reading this warren or whoever is looking at this)
 
