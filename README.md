@@ -14,6 +14,14 @@ I just need to create events/encounters for each tile on the island and an endin
 I created a simple system with JSON files to make this process faster so i might be done with this very soon
 (This might be why there is commits after the deadline on this branch if your reading this warren or whoever is looking at this)
 
+## Installation
+
+```
+dotnet add package xUnit
+dotnet add package Newtonsoft.Json
+dotnet add package Spectre.Console
+```
+
 ## Screenshots
 
 ### ohhh random island generation
