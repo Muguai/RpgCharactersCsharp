@@ -13,7 +13,7 @@ public static class ConsoleUtils
     public static void EmptyPressEnterToContinue()
     {
         AnsiConsole.Prompt(
-            new TextPrompt<string>("")
+            new TextPrompt<string>("'\u00A0'" + PadCenterSpecify("-", 6))
             .AllowEmpty());
     }
 
@@ -41,9 +41,30 @@ public static class ConsoleUtils
         }
     }
 
+     public static async Task DisplayTextSlowly(string dialogText){
+        var delayBetweenChars = 100; 
+
+        AnsiConsole.Write(PadCenterSpecify(" ", dialogText.Length));
+        foreach (char c in dialogText)
+        {
+            AnsiConsole.Write(c);
+            await Task.Delay(delayBetweenChars);
+        }
+
+        AnsiConsole.WriteLine(); 
+
+        EmptyPressEnterToContinue();
+    }
 
     public static string StringAsk(string question)
     {   var answer = AnsiConsole.Ask<string>("'\u00A0'" + question);
         return answer;
+    }
+
+    public static void DisplayGenericFiglet(string title){
+         AnsiConsole.Write(
+            new FigletText(title)
+                .Justify(Justify.Center)
+                .Color(Color.Aqua));
     }
 }

@@ -7,14 +7,14 @@ public class GameLoop
 {
     private Island currentIsland = null!;
     private HeroClass currentHero = null!;
-    public void InitiateLoop(Island island, HeroClass hero)
+    public async Task InitiateLoop(Island island, HeroClass hero)
     {
         currentHero = hero;
         currentIsland = island;
-        Loop();
+        await Loop();
     }
 
-    private void Loop()
+    private async Task Loop()
     {
 
         currentIsland.DisplayIsland();
@@ -28,7 +28,7 @@ public class GameLoop
         Misc food = (Misc)HeroUtils.FindItemInInventory(currentHero.Inventory, "Food");
 
         if(currentHero.Health < currentHero.MaxHealth && food.Amount > 0)
-             options.Add("Eat Food");
+             options.Add(ConsoleUtils.PadCenterSpecify("Eat Food", 4));
 
 
         var chosenOption = AnsiConsole.Prompt(
@@ -44,7 +44,7 @@ public class GameLoop
         switch (chosenOption.Trim())
         {
             case "Travel":
-                Travel();
+                await Travel();
                 break;
             case "CharacterInfo":
                 Display();
@@ -61,7 +61,7 @@ public class GameLoop
         }
 
         AnsiConsole.Clear();
-        Loop();
+        await Loop();
     }
 
     private void Display()
@@ -78,7 +78,7 @@ public class GameLoop
         currentHero.EquipFromInventory(ConsoleUtils.StringAsk(ConsoleUtils.PadCenterSpecify(">", "Whatchu wanna equip".Length + 1)));
     }
 
-    private void Travel()
+    private async Task Travel()
     {
         Misc food = (Misc)HeroUtils.FindItemInInventory(currentHero.Inventory, "Food");
         food.Amount -= 1;
@@ -91,8 +91,10 @@ public class GameLoop
         }
         currentIsland.DisplayIsland();
         string direction = currentIsland.DisplayAvailableDirections();
-        currentIsland.MovePlayer(direction);
-        //if(currentHero.Inventory.Contains)
+        AnsiConsole.Clear();
+        //currentHero gets passed around way to much in this
+        //I should just create a singleton containing hero and its info
+        await currentIsland.MovePlayer(direction, currentHero);
     }
 
     

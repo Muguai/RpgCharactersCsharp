@@ -1,5 +1,5 @@
 using Equipment;
-
+namespace Combat;
 public class Enemy{
 
     public string MonsterName { get; set; }

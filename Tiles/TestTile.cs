@@ -1,6 +1,8 @@
 namespace Tiles;
 using Spectre.Console;
 using Utils;
+using System.Text;
+using Hero;
 public class TestTile : Tile
 {
     private List<string> options = new List<string>(){
@@ -14,25 +16,11 @@ public class TestTile : Tile
     {
 
     }
-    public async override Task Enter()
+    public async override Task Enter(HeroClass hero)
     {
         enteredBefore = true;
-        var table = new Table().Centered();
-
-        await AnsiConsole.Live(table)
-            .StartAsync(async ctx =>
-            {
-                table.AddColumn("Donothing");
-                ctx.Refresh();
-                await Task.Delay(1000);
-
-                table.AddColumn("Now");
-                ctx.Refresh();
-                await Task.Delay(1000);
-            });
-        ConsoleUtils.PressEnterToContinue();
-        
-        //throw new NotImplementedException();
+        ConsoleUtils.DisplayGenericFiglet(nameof(TestTile));
+        await EnterFromJson(hero);
     }
 
     public override List<string> Options()
@@ -43,7 +31,8 @@ public class TestTile : Tile
 
     public override void ChooseOptions(string chosenOption)
     {
-        if(chosenOption == options[0]){
+        if (chosenOption == options[0])
+        {
             DoNothing();
         }
     }

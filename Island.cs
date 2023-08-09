@@ -1,6 +1,7 @@
 using Spectre.Console;
 using Utils;
 using Tiles;
+using Hero;
 public class Island
 {
     public Tile[,] islandGrid { get; set; } = null!;
@@ -17,16 +18,18 @@ public class Island
         this.columns = columns;
     }
 
-    public void MovePlayer(string dir)
+    public async Task MovePlayer(string dir, HeroClass hero)
     {
      
         //islandGrid[playerPos.X, playerPos.Y] = new TestTile();
         playerPos = playerPos.getAdjacent(dir);
         AnsiConsole.Clear();
-        Console.Clear();
-        //await islandGrid[playerPos.X,playerPos.Y].Enter();
+        await islandGrid[playerPos.X,playerPos.Y].Enter(hero);
+
+        AnsiConsole.Clear();
         //islandGrid[playerPos.X, playerPos.Y] = 2;
         DisplayIsland();
+        
     }
 
     public string DisplayAvailableDirections()

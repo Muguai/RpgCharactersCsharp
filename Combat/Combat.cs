@@ -2,6 +2,8 @@ using Hero;
 using Equipment;
 using Spectre.Console;
 using Utils;
+namespace Combat;
+
 public class Combat
 {
 

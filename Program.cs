@@ -7,11 +7,11 @@ using Utils;
 public static class Program
 {
 
-    public static void Main()
+    public static async Task Main()
     {
         (Island, HeroClass?) initTuple = Setup();
         GameLoop gameLoop = new GameLoop();
-        gameLoop.InitiateLoop(initTuple.Item1, initTuple.Item2!);
+        await gameLoop.InitiateLoop(initTuple.Item1, initTuple.Item2!);
 
         /*
         island.DisplayIsland();

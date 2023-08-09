@@ -1,5 +1,7 @@
 using Spectre.Console;
 using Utils;
+namespace Combat;
+
 public static class Dice
 {
 
