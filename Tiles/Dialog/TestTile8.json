@@ -1,0 +1,38 @@
+{
+    "enter": [
+      "You enter a cool forest"
+    ],
+    "exit": [
+      "You leave the forest"
+    ],
+    "altEnter": [
+      "You escape the thorns easily with your previous knowledge"
+    ],
+    "repeatEnter": false,
+    "startCombat": false,
+    "startSkillCheck": true,
+    "skillCheck": {
+        "damage": 5,
+        "goal": 0,
+        "statToCheck": "dex",
+        "BeforeDialog": [
+            "You get tangled in a vine"
+          ],
+        "SuccessDialog": [
+            "You break free from the vines clutches",
+            "In the branches you find some fruit"
+        ],
+        "FailDialog": [
+            "You get scratched by the vines trying to break free"
+        ],
+        "drops": [
+          {
+            "type": "Misc",
+            "name": "Food",
+            "miscType": "Rations",
+            "amount": 1
+          }
+        ]
+      }
+  }
+  

@@ -6,33 +6,46 @@
       "You leave the forest"
     ],
     "altEnter": [
-      "You escape the thorns easily with your previous knowledge"
+      "You find the remains of the goblin you slayd"
     ],
-    "repeatEnter": false,
-    "startCombat": false,
-    "startSkillCheck": true,
-    "skillCheck": {
-        "damage": 5,
-        "goal": 0,
-        "statToCheck": "dex",
-        "BeforeDialog": [
-            "You get tangled in a vine"
-          ],
-        "SuccessDialog": [
-            "You break free from the vines clutches",
-            "In the branches you find some fruit"
+    "repeatEnter": true,
+    "startCombat": true,
+    "startSkillCheck": false,
+    "enemy": {
+        "monsterName": "Goblin",
+        "diceAmount": 1,
+        "additionalDmg": 2,
+        "health": 10,
+        "BeforeDialog": [  
+          "You get attacked by a goblin"
         ],
-        "FailDialog": [
-            "You get scratched by the vines trying to break free"
+        "KillDialog": [  
+          "*Goblin:* Well done traveler"
         ],
         "drops": [
-          {
-            "type": "Misc",
-            "name": "Food",
-            "miscType": "Rations",
-            "amount": 1
-          }
-        ]
+            {
+              "type": "Weapon",
+              "name": "Ugly Hatchet",
+              "weaponType": "Hatchet",
+              "amountOfDice": 1,
+              "weaponDamage": 10,
+              "requiredLevel": 5
+            },
+            {
+              "type": "Armor",
+              "armorType": "Cloth",
+              "name": "Ugly Armor2",
+              "slot": "Body",
+              "stats": [1,1,1],
+              "requiredLevel": 3
+            },
+            {
+              "type": "Misc",
+              "name": "Food",
+              "miscType": "Rations",
+              "amount": 1
+            }
+          ]
       }
   }
   

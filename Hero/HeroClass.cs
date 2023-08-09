@@ -204,7 +204,7 @@ public abstract class HeroClass
 
         // ------------ Inventory ------------------
 
-        int itemsPerColumn = 6;
+        int itemsPerColumn = 2;
         var tables = GenerateInventoryTables(Inventory);
 
         var columns = (int)Math.Ceiling((double)tables.Count / itemsPerColumn);
@@ -268,11 +268,10 @@ public abstract class HeroClass
             );
 
         // ------------------- Size Adjustments -------------
-        layout["Left1"].Size(20);
-        layout["Right1"].MinimumSize(30);
+        layout["Left1"].Size(18);
+        layout["Right1"].MinimumSize(25);
 
-        layout["Right2"].Size(10);
-        layout["Right"].MinimumSize(5);
+        layout["Right2"].Size(8);
 
 
         AnsiConsole.Write(layout);
