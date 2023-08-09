@@ -9,12 +9,21 @@ public class HeroStats{
         this.Strength = strength;
     }
 
+    /// <summary>
+    /// Adds another HeroStats stats to this HeroStat
+    /// </summary>
+    /// <param name="stats"></param>
     public void Add(HeroStats stats){
         this.Strength += stats.Strength;
         this.Dexterity += stats.Dexterity;
         this.Intelligence += stats.Intelligence;
     }
 
+    /// <summary>
+    /// Acceptable input => (str, dex, int)
+    /// </summary>
+    /// <param name="stat"></param>
+    /// <returns>a specific stat (str, dex or int)</returns>
     public int getSum(string stat){
         switch(stat){
             case "str":

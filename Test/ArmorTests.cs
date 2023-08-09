@@ -7,6 +7,8 @@ namespace Tests
 {
     public class ArmorTests
     {
+        //I didnt feel like it was nececsary to do all these test for each different type of armor and slot and such so i just did it for one
+        //but you could easily just use a theory like ive done in herotest to quickly make one for each armor if you wanted to
         [Fact]
         public void ArmorCreation_ArmorGetsCorrectInitValuesAtCreation_test1HeadCloth1_1_1()
         {

@@ -20,11 +20,18 @@ public abstract class HeroClass
         {Slot.Legs, null!}
     };
 
+    /// <summary>
+    /// Increases the heros level by 1 and adds levelUpStats to its total stats
+    /// </summary>
     public void LevelUp()
     {
         this.level += 1;
         heroStats.Add(levelUpStats);
     }
+    /// <summary>
+    /// Calculates heroes damage based on its damagingStat and its currently equiped weapon damage
+    /// </summary>
+    /// <returns>Damage done by hero</returns>
     public int Damage()
     {
         if (equipment[Slot.Weapon] is null)
@@ -32,6 +39,10 @@ public abstract class HeroClass
         Weapon w = (Weapon)equipment[Slot.Weapon];
         return w.WeaponDamage + (1 + TotalStats().getSum(damagingStat) / 100);
     }
+    /// <summary>
+    /// Equips Weapon To Hero
+    /// </summary>
+    /// <param name="weapon"></param>
     public void Equip(Weapon weapon)
     {
         if (!Array.Exists(validWeaponTypes, x => x == weapon.WeaponType) || weapon.RequiredLevel > level)
@@ -42,6 +53,10 @@ public abstract class HeroClass
         equipment[Slot.Weapon] = weapon;
 
     }
+    /// <summary>
+    /// Equip Armor to Hero
+    /// </summary>
+    /// <param name="armor"></param>
     public void Equip(Armor armor)
     {
         if (!Array.Exists(validArmorTypes, x => x == armor.ArmorType) || armor.RequiredLevel > level)
@@ -52,6 +67,11 @@ public abstract class HeroClass
         equipment[armor.ItemSlot] = armor;
 
     }
+    /// <summary>
+    /// Acceptable input => (str, dex, int)
+    /// </summary>
+    /// <param name="stat"></param>
+    /// <returns>The total of a specific stat the hero has (str, dex or int)</returns>
     public int SpecificStat(string stat)
     {
         int total = 0;
@@ -69,11 +89,18 @@ public abstract class HeroClass
         return heroStats.getSum(stat) + total;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>The total of all the heroes stats</returns>
     public HeroStats TotalStats()
     {
         return new HeroStats(SpecificStat("str"), SpecificStat("dex"), SpecificStat("int"));
     }
 
+    /// <summary>
+    /// Writes a summary of the hero to the console
+    /// </summary>
     public void Display()
     {
         StringBuilder sb = new StringBuilder();

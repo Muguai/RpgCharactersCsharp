@@ -7,6 +7,9 @@ namespace Tests
 {
     public class WeaponTests
     {
+        //I didnt feel like it was nececsary to do all these test for each different type of weapon and such so i just did it for one
+        //but you could easily just use a theory like ive done in herotest to quickly make one for each weapon if you wanted to
+      
         [Fact]
         public void WeaponCreation_WeaponGetsCorrectInitValuesAtCreation_test1WeaponDagger4()
         {

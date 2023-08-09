@@ -8,6 +8,8 @@ namespace Tests
 {
     public class HeroStatsTest
     {
+        //I didnt feel like it was nececsary to do all these test for each class so i just did it for one
+        //but you could easily just use a theory like ive done in herotest to quickly make one for each class if you wanted to
         [Fact]
         public void TotalStats_StatsAfterNoEquip_5_2_1()
         {
