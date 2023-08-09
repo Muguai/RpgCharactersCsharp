@@ -1,7 +1,6 @@
 namespace Tiles;
 using Spectre.Console;
 using Utils;
-using System.Text;
 using Hero;
 public class TestTile : Tile
 {
@@ -9,7 +8,6 @@ public class TestTile : Tile
         ConsoleUtils.PadCenterSpecify("Do Nothing", 4)
     };
 
-    bool enteredBefore = false;
 
 
     public TestTile()
@@ -18,7 +16,6 @@ public class TestTile : Tile
     }
     public async override Task Enter(HeroClass hero)
     {
-        enteredBefore = true;
         ConsoleUtils.DisplayGenericFiglet(nameof(TestTile));
         await EnterFromJson(hero);
     }

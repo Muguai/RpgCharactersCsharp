@@ -13,7 +13,7 @@ public static class ConsoleUtils
     public static void EmptyPressEnterToContinue()
     {
         AnsiConsole.Prompt(
-            new TextPrompt<string>("'\u00A0'" + PadCenterSpecify("-", 6))
+            new TextPrompt<string>("'\u00A0'" + PadCenterSpecify(".", 6))
             .AllowEmpty());
     }
 
@@ -23,7 +23,7 @@ public static class ConsoleUtils
         var padding = (consoleWidth - text.Length) / 2;
         return new string(' ', Math.Max(0, padding)) + text;
     }
-     public static string PadCenterSpecify(string text, int specify)
+    public static string PadCenterSpecify(string text, int specify)
     {
         var consoleWidth = AnsiConsole.Profile.Width;
         var padding = (consoleWidth - (text.Length + specify)) / 2;
@@ -41,30 +41,50 @@ public static class ConsoleUtils
         }
     }
 
-     public static async Task DisplayTextSlowly(string dialogText){
-        var delayBetweenChars = 100; 
-
+    public static async Task DisplayTextSlowly(string dialogText)
+    {
+        var delayBetweenChars = 50;
+        int startIndex = dialogText.IndexOf('*');
+        int endIndex = dialogText.LastIndexOf('*');
         AnsiConsole.Write(PadCenterSpecify(" ", dialogText.Length));
-        foreach (char c in dialogText)
+
+        if (startIndex >= 0 && endIndex >= 0 && startIndex < endIndex)
         {
-            AnsiConsole.Write(c);
-            await Task.Delay(delayBetweenChars);
+            AnsiConsole.Write(dialogText.Substring(0, startIndex));
+
+            AnsiConsole.Write(dialogText.Substring(startIndex + 1, endIndex - startIndex - 1));
+
+            for (int i = endIndex + 1; i < dialogText.Length; i++)
+            {
+                AnsiConsole.Write(dialogText[i]);
+                await Task.Delay(delayBetweenChars);
+            }
+        }
+        else
+        {
+            foreach (char c in dialogText)
+            {
+                AnsiConsole.Write(c);
+                await Task.Delay(delayBetweenChars);
+            }
         }
 
-        AnsiConsole.WriteLine(); 
+        AnsiConsole.WriteLine();
 
         EmptyPressEnterToContinue();
     }
 
     public static string StringAsk(string question)
-    {   var answer = AnsiConsole.Ask<string>("'\u00A0'" + question);
+    {
+        var answer = AnsiConsole.Ask<string>("'\u00A0'" + question);
         return answer;
     }
 
-    public static void DisplayGenericFiglet(string title){
-         AnsiConsole.Write(
-            new FigletText(title)
-                .Justify(Justify.Center)
-                .Color(Color.Aqua));
+    public static void DisplayGenericFiglet(string title)
+    {
+        AnsiConsole.Write(
+           new FigletText(title)
+               .Justify(Justify.Center)
+               .Color(Color.Aqua));
     }
 }

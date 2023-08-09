@@ -1,0 +1,15 @@
+{
+    "enter": [
+      ""
+    ],
+    "exit": [
+      ""
+    ],
+    "altEnter": [
+      ""
+    ],
+    "repeatEnter": false,
+    "startCombat": false,
+    "startSkillCheck": false
+  }
+  

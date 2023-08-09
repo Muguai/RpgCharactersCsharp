@@ -7,7 +7,9 @@ using Equipment;
 using Hero;
 public abstract class Tile
 {
-    HeroClass currentHero;
+    protected HeroClass currentHero;
+    protected bool enteredBefore = false;
+
     public async virtual Task Enter(HeroClass hero)
     {
         currentHero = hero;
@@ -34,29 +36,142 @@ public abstract class Tile
         string jsonContent = File.ReadAllText(jsonFilePath);
         JObject dialogData = JObject.Parse(jsonContent);
 
-        foreach (JToken chunkToken in dialogData["enter"]!)
+        if (enteredBefore)
         {
-            string chunk = chunkToken.Value<string>()!;
-            await ConsoleUtils.DisplayTextSlowly(chunk);
+            await DisplayDialogData(dialogData, "altEnter");
+            return;
         }
 
+        bool repeatEnter = (bool)dialogData["repeatEnter"]!;
+
+        if(!repeatEnter)
+            enteredBefore = true;
+
+        await DisplayDialogData(dialogData, "enter");
+
         bool startCombat = (bool)dialogData["startCombat"]!;
+        bool startSkillCheck = (bool)dialogData["startSkillCheck"]!;
+
         if (startCombat)
         {
-            StartCombat(dialogData, hero);
+            JObject enemyData = dialogData["enemy"]!.ToObject<JObject>()!;
+            await StartCombat(enemyData, hero);
+        }
+        else if (startSkillCheck)
+        {
+            JObject skillCheckData = dialogData["skillCheck"]!.ToObject<JObject>()!;
+            await StartSkillCheck(skillCheckData, hero);
         }
     }
 
-    protected virtual void StartCombat(JObject dialogData, HeroClass hero)
+    protected async virtual Task StartSkillCheck(JObject skillCheckData, HeroClass hero)
+    {
+
+        await DisplayDialogData(skillCheckData, "BeforeDialog");
+
+
+        JArray dropsData = (JArray)skillCheckData["drops"]!;
+        List<Item> drops = ConstructDrops(dropsData);
+
+        int goal = skillCheckData.Value<int>("goal");
+        string statToCheck = skillCheckData.Value<string>("statToCheck")!;
+
+        bool success = SkillCheck.StartSkillCheck(hero, statToCheck, goal);
+
+        if (success)
+        {
+            await DisplayDialogData(skillCheckData, "SuccessDialog");
+            if (drops.Count > 0)
+            {
+                AnsiConsole.Write(
+                new FigletText("You got:")
+                .Justify(Justify.Center)
+                .Color(Color.Aqua));
+                foreach (Item i in drops)
+                {
+                    if (i.GetType() == typeof(Misc))
+                    {
+                        Misc itemMisc = (Misc)i;
+                        string amount = " " + itemMisc.Amount + "X";
+                        AnsiConsole.Write(
+                            new FigletText(i.ItemName + amount)
+                            .Justify(Justify.Center)
+                            .Color(Color.Aqua));
+                        hero.AddToInventory(itemMisc);
+                        continue;
+                    }
+
+                    AnsiConsole.Write(
+                            new FigletText(i.ItemName )
+                            .Justify(Justify.Center)
+                            .Color(Color.Aqua));
+                    if (i.GetType() == typeof(Armor))
+                    {
+                        Armor itemArmor = (Armor)i;
+                        hero.AddToInventory(itemArmor);
+                    }
+                    else if (i.GetType() == typeof(Weapon))
+                    {
+                        Weapon itemWeapon = (Weapon)i;
+                        hero.AddToInventory(itemWeapon);
+                    }   
+                }
+            }
+            ConsoleUtils.PressEnterToContinue();
+        }
+        else
+        {
+            int damage = skillCheckData.Value<int>("damage");
+            await DisplayDialogData(skillCheckData, "FailDialog");
+            await ConsoleUtils.DisplayTextSlowly("You take " + damage + " damage");
+            hero.Health -= damage;
+            if (hero.Health <= 0)
+            {
+                HeroUtils.GameOver();
+            }
+        }
+        AnsiConsole.Clear();
+    }
+
+    private async Task DisplayDialogData(JObject dialogData, string dialogName)
+    {
+        JArray dialogJ = (JArray)dialogData[dialogName]!;
+        string[] dialog = dialogJ.ToObject<string[]>()!;
+
+        foreach (string s in dialog)
+        {
+            await ConsoleUtils.DisplayTextSlowly(s);
+        }
+    }
+
+    protected async virtual Task StartCombat(JObject enemyData, HeroClass hero)
     {
         //Create enemy
-        JObject enemyData = dialogData["enemy"]!.ToObject<JObject>()!;
+
+        await DisplayDialogData(enemyData, "BeforeDialog");
+        AnsiConsole.Clear();
+
+
         string monsterName = enemyData.Value<string>("monsterName")!;
         int diceAmount = enemyData.Value<int>("diceAmount")!;
         int additionalDmg = enemyData.Value<int>("additionalDmg");
         int health = enemyData.Value<int>("health");
 
+
         JArray dropsData = (JArray)enemyData["drops"]!;
+        List<Item> drops = ConstructDrops(dropsData);
+
+        Enemy enemy = new(monsterName, diceAmount, additionalDmg, health, drops.ToArray());
+        Combat combat = new();
+        combat.StartCombat(hero, enemy);
+
+        await DisplayDialogData(enemyData, "KillDialog");
+
+        AnsiConsole.Clear();
+    }
+
+    private List<Item> ConstructDrops(JArray dropsData)
+    {
         List<Item> drops = new();
 
         foreach (JToken dropData in dropsData)
@@ -76,11 +191,11 @@ public abstract class Tile
                 case "Armor":
                     ArmorType armorType = Enum.Parse<ArmorType>(dropData.Value<string>("armorType")!);
                     Slot bodyType = Enum.Parse<Slot>(dropData.Value<string>("slot")!);
-                    
+
                     JArray statsArray = dropData.Value<JArray>("stats")!;
                     int[] stats = statsArray.ToObject<int[]>()!;
                     HeroStats armorStats = new(stats[0], stats[1], stats[2]);
-                    
+
                     string armorName = dropData.Value<string>("name")!;
                     int requiredArmorLevel = dropData.Value<int>("requiredLevel");
                     Armor armor = new(armorType, bodyType, armorStats, armorName, requiredArmorLevel);
@@ -98,10 +213,8 @@ public abstract class Tile
             }
         }
 
-        // Create the enemy instance
-        Enemy enemy = new(monsterName, diceAmount, additionalDmg, health, drops.ToArray());
-        Combat combat = new();
-        combat.StartCombat(hero, enemy);
+        return drops;
+
     }
     public virtual List<string> Options()
     {
@@ -109,7 +222,11 @@ public abstract class Tile
     }
     public async virtual Task Exit()
     {
-        await Task.Delay(10);
+        string jsonFilePath = GetJsonDialogPath();
+        string jsonContent = File.ReadAllText(jsonFilePath);
+        JObject dialogData = JObject.Parse(jsonContent);
+
+        await DisplayDialogData(dialogData, "exit");
     }
     public virtual void ChooseOptions(string chosenOption)
     {

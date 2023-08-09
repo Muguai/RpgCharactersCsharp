@@ -1,0 +1,51 @@
+{
+    "enter": [
+      "You enter a cool forest"
+    ],
+    "exit": [
+      "You leave the forest"
+    ],
+    "altEnter": [
+      "You find the remains of the goblin you slayd"
+    ],
+    "repeatEnter": true,
+    "startCombat": true,
+    "startSkillCheck": false,
+    "enemy": {
+        "monsterName": "Goblin",
+        "diceAmount": 1,
+        "additionalDmg": 2,
+        "health": 10,
+        "BeforeDialog": [  
+          "You get attacked by a goblin"
+        ],
+        "KillDialog": [  
+          "*Goblin:* Well done traveler"
+        ],
+        "drops": [
+            {
+              "type": "Weapon",
+              "name": "Ugly Hatchet",
+              "weaponType": "Hatchet",
+              "amountOfDice": 1,
+              "weaponDamage": 10,
+              "requiredLevel": 5
+            },
+            {
+              "type": "Armor",
+              "armorType": "Cloth",
+              "name": "Ugly Armor2",
+              "slot": "Body",
+              "stats": [1,1,1],
+              "requiredLevel": 3
+            },
+            {
+              "type": "Misc",
+              "name": "Food",
+              "miscType": "Rations",
+              "amount": 1
+            }
+          ]
+      }
+  }
+  

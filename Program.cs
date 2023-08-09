@@ -73,48 +73,20 @@ public static class Program
                 break;
         }
 
-        Weapon weapon = new Weapon(WeaponType.Fists, 1, 0, "Your Fists", 1);
+        Weapon weapon = new(WeaponType.Fists, 1, -2, "Your Fists", 1);
         hero.Equip(weapon);
-        Misc misc = new Misc("Food", MiscType.Rations, 10);
+        Misc misc = new("Food", MiscType.Rations, 10);
         hero.AddToInventory(misc);
-
-        Misc misc2 = new Misc("faf", MiscType.Rations, 10);
-        hero.AddToInventory(misc2);
-
-        Misc misc3 = new Misc("Baba", MiscType.Rations, 10);
-        hero.AddToInventory(misc3);
-
-        Misc misc5 = new Misc("fefde", MiscType.Rations, 10);
-        hero.AddToInventory(misc5);
-
-        Weapon misc4 = new Weapon(WeaponType.Dagger, 1, 1, "Your dagger", 1);
-        hero.AddToInventory(misc4);
-
-
-        Armor misc6 = new Armor(ArmorType.Cloth, Slot.Body, new HeroStats(1, 1, 1), "Ugly Armor", 1);
-        hero.AddToInventory(misc6);
-
-    /*
-        Combat combat = new();
-        Item[] drops = new Item[] { misc6, misc2 };
-        Enemy enemy = new("Goblin", 1, 1, 10, drops);
-
-        bool what = combat.StartCombat(hero, enemy);
-        */
+        hero.AddToInventory(misc);
+    
         AnsiConsole.WriteLine(ConsoleUtils.PadCenterText(dialog));
+        AnsiConsole.WriteLine(ConsoleUtils.PadCenterText("Also imma give you some food. here you go dummy now get out of"));
+        
         ConsoleUtils.PressEnterToContinue();
-
-
-
-
-
-
 
         AnsiConsole.Clear();
 
-
-
-        IslandGenerator islandGenerator = new IslandGenerator();
+        IslandGenerator islandGenerator = new();
         return (islandGenerator.InitIsland(10, 10), hero);
 
     }

@@ -157,9 +157,10 @@ public abstract class HeroClass
         return new HeroStats(SpecificStat("str"), SpecificStat("dex"), SpecificStat("int"));
     }
 
+    //WARNING EXTREMLY UGLY METHOD
+    //Gonna move this into its own class and make it prettier when i got time
     public void Display()
-    {;
-
+    {
         // Create the layout
         var layout = new Layout("Root")
             .SplitColumns(
@@ -203,7 +204,7 @@ public abstract class HeroClass
 
         // ------------ Inventory ------------------
 
-        int itemsPerColumn = 8;
+        int itemsPerColumn = 6;
         var tables = GenerateInventoryTables(Inventory);
 
         var columns = (int)Math.Ceiling((double)tables.Count / itemsPerColumn);

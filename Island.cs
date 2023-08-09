@@ -9,7 +9,7 @@ public class Island
     public int columns { get; set; }
     public Coordinate playerPos;
 
-    private bool debug = true;
+    private bool debug = false;
     public Island(Tile[,] islandGrid, Coordinate playerPos, int rows, int columns)
     {
         this.islandGrid = islandGrid;
@@ -22,8 +22,14 @@ public class Island
     {
      
         //islandGrid[playerPos.X, playerPos.Y] = new TestTile();
+        
+        DisplayIsland();
+        await islandGrid[playerPos.X,playerPos.Y].Exit();
+
         playerPos = playerPos.getAdjacent(dir);
         AnsiConsole.Clear();
+        DisplayIsland();
+
         await islandGrid[playerPos.X,playerPos.Y].Enter(hero);
 
         AnsiConsole.Clear();

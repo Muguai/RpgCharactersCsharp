@@ -1,7 +1,7 @@
 using Tiles;
 public class IslandGenerator
 {
-    bool debug = true;
+    bool debug = false;
     Coordinate playerPos = new(0, 0);
 
     public Island InitIsland(int rows, int columns)
@@ -87,8 +87,6 @@ public class IslandGenerator
 
         for (int iteration = 0; iteration < iterations; iteration++)
         {
-            Console.WriteLine("IslandStart");
-            PrintIsland(island);
 
 
             for (int i = 1; i < rows - 1; i++)
@@ -98,7 +96,6 @@ public class IslandGenerator
                     int neighborsCount = CountNeighbors(island, i, j);
                     if (!(island[i, j] is WaterTile) || ((island[i, j] is WaterTile) && neighborsCount > 0 && random.NextDouble() < chance))
                     {
-                        Console.WriteLine("Add");
                         island[i, j] = new TestTile();
                     }
                     if (debug)

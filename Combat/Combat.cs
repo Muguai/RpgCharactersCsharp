@@ -29,15 +29,13 @@ public class Combat
             .Justify(Justify.Center)
             .Color(Color.Aqua));
         CombatLoop();
-        EndCombat();
-        if(isPlayerDead)
+        if (isPlayerDead)
             HeroUtils.GameOver();
     }
 
-    private void EndCombat()
+    private void Drops()
     {
-
-        if (enemyInBattle.Drops.Length > 0 && shouldRun != true)
+        if (enemyInBattle.Drops.Length > 0)
         {
             AnsiConsole.Write(
                 new FigletText(enemyInBattle.MonsterName + " Dropped:")
@@ -45,17 +43,32 @@ public class Combat
                 .Color(Color.Aqua));
             foreach (Item i in enemyInBattle.Drops)
             {
-                string amount = "";
                 if (i.GetType() == typeof(Misc))
                 {
                     Misc itemMisc = (Misc)i;
-                    amount = " X" + itemMisc.Amount;
+                    string amount = itemMisc.Amount + "X";
+                    AnsiConsole.Write(
+                        new FigletText(i.ItemName + amount)
+                        .Justify(Justify.Center)
+                        .Color(Color.Aqua));
+                    heroInBattle.AddToInventory(itemMisc);
+                    continue;
                 }
+
                 AnsiConsole.Write(
-                    new FigletText(i.ItemName + amount)
-                    .Justify(Justify.Center)
-                    .Color(Color.Aqua));
-                heroInBattle.AddToInventory(i);
+                        new FigletText(i.ItemName)
+                        .Justify(Justify.Center)
+                        .Color(Color.Aqua));
+                if (i.GetType() == typeof(Armor))
+                {
+                    Armor itemArmor = (Armor)i;
+                    heroInBattle.AddToInventory(itemArmor);
+                }
+                else if (i.GetType() == typeof(Weapon))
+                {
+                    Weapon itemWeapon = (Weapon)i;
+                    heroInBattle.AddToInventory(itemWeapon);
+                }
             }
 
         }
@@ -75,7 +88,7 @@ public class Combat
           .PageSize(10)
           .AddChoices(actions));
 
-        
+
 
         //Do players choice
         if (combatOption == actions[0])
@@ -139,20 +152,21 @@ public class Combat
             .AddItem("Enemys Lost Health", enemyInBattle.MaxHealth - Math.Max(enemyInBattle.Health, 0), Color.DarkRed);
 
         AnsiConsole.WriteLine(" ");
-        AnsiConsole.WriteLine(ConsoleUtils.PadCenterText("Enemy Health " + enemyInBattle.Health + "/" + enemyInBattle.MaxHealth ));
+        AnsiConsole.WriteLine(ConsoleUtils.PadCenterText("Enemy Health " + enemyInBattle.Health + "/" + enemyInBattle.MaxHealth));
         AnsiConsole.WriteLine(" ");
-    
+
         ConsoleUtils.AddEmptyStringPadding((int)breakChart.Width!);
         AnsiConsole.Write(breakChart);
 
         if (enemyInBattle.Health < 1)
         {
-            
             AnsiConsole.Write(
             new FigletText("You defeated " + enemyInBattle.MonsterName)
                 .Justify(Justify.Center)
                 .Color(Color.Aqua));
             isEnemyDead = true;
+            Drops();
+            heroInBattle.LevelUp();
         }
 
         ConsoleUtils.EmptyPressEnterToContinue();
@@ -195,9 +209,9 @@ public class Combat
             .AddItem("Your Lost Health", heroInBattle.MaxHealth - Math.Max(heroInBattle.Health, 0), Color.DarkRed);
 
         AnsiConsole.WriteLine(" ");
-        AnsiConsole.WriteLine(ConsoleUtils.PadCenterText("Your Health " + heroInBattle.Health + "/" + heroInBattle.MaxHealth ));
+        AnsiConsole.WriteLine(ConsoleUtils.PadCenterText("Your Health " + heroInBattle.Health + "/" + heroInBattle.MaxHealth));
         AnsiConsole.WriteLine(" ");
-       
+
         ConsoleUtils.AddEmptyStringPadding((int)breakChart.Width!);
         AnsiConsole.Write(breakChart);
 

@@ -1,0 +1,51 @@
+{
+    "enter": [
+      ""
+    ],
+    "exit": [
+      ""
+    ],
+    "altEnter": [
+      ""
+    ],
+    "repeatEnter": false,
+    "startCombat": true,
+    "startSkillCheck": false,
+    "enemy": {
+        "monsterName": "",
+        "diceAmount": 1,
+        "additionalDmg": 1,
+        "health": 1,
+        "BeforeDialog": [  
+          ""
+        ],
+        "KillDialog": [  
+          ""
+        ],
+        "drops": [
+            {
+              "type": "Weapon",
+              "name": "",
+              "weaponType": "",
+              "amountOfDice": 1,
+              "weaponDamage": 1,
+              "requiredLevel": 1
+            },
+            {
+              "type": "Armor",
+              "armorType": "",
+              "name": "",
+              "slot": "",
+              "stats": [1,1,1],
+              "requiredLevel": 1
+            },
+            {
+              "type": "Misc",
+              "name": "",
+              "miscType": "",
+              "amount": 1
+            }
+          ]
+      }
+  }
+  
