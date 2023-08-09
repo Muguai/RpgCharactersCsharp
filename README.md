@@ -1,6 +1,7 @@
 # RpgCharactersCsharp
 Assignment 1 .Net Noroff. Implementation of simple rpg characters in C#
-For nuts stuff change branch to main
+
+Note: for nuts stuff change branch to main
 
 ## Framework
 
