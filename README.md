@@ -18,16 +18,20 @@ dotnet add package Newtonsoft.Json
 dotnet add package Spectre.Console
 ```
 
-## Screenshots
+## Screenshots/Gifs
 
 ### ohhh random island generation
-![Screenshot 2023-08-09 221116](https://github.com/Muguai/RpgCharactersCsharp/assets/37656342/9babea40-749d-4e6c-8d47-cfb89b0871bc)
+
+![Screenshot 2023-08-09 221116](https://github.com/Muguai/RpgCharactersCsharp/assets/37656342/570a769d-7b92-4c26-a136-9db7245d94a7)
 
 ### Some gameplay
-![ArtChange](https://github.com/Muguai/RpgCharactersCsharp/assets/37656342/7b626c4d-0011-4b40-b988-4419a941ad07)
+
+![Gameplay2](https://github.com/Muguai/RpgCharactersCsharp/assets/37656342/857794ef-4495-4751-b538-3b6a1e8cdaa7)
+
 
 ### Combat
-![ArtChange2](https://github.com/Muguai/RpgCharactersCsharp/assets/37656342/d53ae6c2-5c9c-456a-9c68-9ec7431f5dd2)
+
+![Gameplay](https://github.com/Muguai/RpgCharactersCsharp/assets/37656342/2bef0889-8138-4356-a039-5fe899ae71dd)
 
 
 ## Made by
